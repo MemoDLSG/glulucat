@@ -1,0 +1,1 @@
+../../../../Graficas/Glulucat/Glulucat/Characters.h
