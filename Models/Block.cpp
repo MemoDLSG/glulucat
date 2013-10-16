@@ -22,6 +22,14 @@ Block::Block (int px, int py, blockType ptype, blockItem pitem) {
     item = pitem;
 }
 
+int Block::getX () {
+    return x;
+}
+
+int Block::getY () {
+    return y;
+}
+
 blockType Block::getType () {
     return type;
 }
@@ -30,6 +38,33 @@ blockItem Block::getItem () {
     return item;
 }
 
+void Block::setX(int x){
+    this->x = x;
+}
+
+void Block::setY(int y){
+    this->y = y;
+}
+
 void Block::setType(blockType type){
-    this->type = ptype;
+    this->type = type;
+}
+
+void Block::setItem(blockItem item){
+    this->item = item;
+}
+
+void Block::hitBlock(){
+    //TODO
+    switch(item){
+        //spawn the appropriate powerup above me
+    }
+    switch(type){
+        //switch to the new type corresponding to hitting the block, or destroy itself
+    }
+}
+
+void Block::drawBlock(){
+    //TODO
+    //OpenGL drawing functions
 }
