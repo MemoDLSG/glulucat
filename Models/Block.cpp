@@ -15,8 +15,21 @@ Block::Block () {
     type = 0;
 }
 
-Block::Block (int px, int py, int ptype) {
+Block::Block (int px, int py, blockType ptype, blockItem pitem) {
     x = px;
     y = py;
     type = ptype;
+    item = pitem;
+}
+
+blockType Block::getType () {
+    return type;
+}
+
+blockItem Block::getItem () {
+    return item;
+}
+
+void Block::setType(blockType type){
+    this->type = ptype;
 }
