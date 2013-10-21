@@ -10,8 +10,6 @@
 #ifndef __Glulucat__Block__
 #define __Glulucat__Block__
 
-#include <iostream>
-
 enum blockType {
      BLOCK_BREAKABLE = 10000,
      BLOCK_UNBREAKABLE = 10001,
@@ -24,13 +22,15 @@ enum blockItem {
      BLOCK_YARN = 20002
    };
 
-#endif /* defined(__Glulucat__Block__) */
 
 class Block {
+    
 public:
+    
     Block();
     Block(int, int, blockType, blockItem);
-    ~Block();
+//    ~Block();
+    
     int getX();
     int getY();
     blockType getType();
@@ -41,10 +41,13 @@ public:
     void setItem(blockItem item);
     void hitBlock();
     void drawBlock();
+    
 private:
     int x;
     int y;
     blockType type;
     blockItem item;
 };
+
+#endif /* defined(__Glulucat__Block__) */
 

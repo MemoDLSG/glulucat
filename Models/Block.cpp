@@ -12,7 +12,7 @@
 Block::Block () {
     x = 0;
     y = 0;
-    type = 0;
+    type = BLOCK_BREAKABLE;
 }
 
 Block::Block (int px, int py, blockType ptype, blockItem pitem) {
