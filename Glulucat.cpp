@@ -16,15 +16,17 @@
 #endif
 
 Glulucat::Glulucat(){
-    x = 0;
-    y = 0;
+    x = 400;
+    y = 300;
     z = 0;
 }
 
 void Glulucat::displayCharacter() {
     glColor3f(1.0, 1.0, 1.0);
     //std::cout << "x: " << x << " y: " << y << " z: " << z << std::endl;
+    glScalef (2.0, 1.5, 0.5);
     glTranslatef(x, y, z);
-    glutWireCube(1.0);
+    glutWireCube(50.0);
     
 }
+

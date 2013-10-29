@@ -25,13 +25,19 @@ void Character::displayCharacter (void) {
     
 }
 
-int Character::moveX(int px){
-    x = x + px;
+int Character::moveX(int x){
+    this -> x += x;
     //std::cout << "Move x: " << x << std::endl;
     return x;
 }
 
 int Character::moveY(int py){
     y = y + py;
+    //std::cout << "Move y: " << y << std::endl;
     return y;
+}
+
+bool Character::jump(bool jumping){
+    this -> jumping = jumping;
+    return jumping;
 }

@@ -13,17 +13,17 @@
 
 class Character {
 
-    int x_speed;
-    int y_speed;
-    bool jumping;
     bool powerup;
     bool flicking;
     
 public:
-
+    int x_speed;
+    int y_speed;
+    
     Character();
     //~Character();
     void displayCharacter();
+    bool jump(bool);
     int moveX(int);
     int moveY(int);
 
@@ -31,6 +31,7 @@ protected:
     int x;
     int y;
     int z;
+    bool jumping;
     
 private:
     

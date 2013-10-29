@@ -37,12 +37,13 @@ void init(void) {
 }
 
 
-
+/**
+ * Manda a pintar el Glulucat 
+ **/
 void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
-    gluLookAt (0.0, 3.0, 5.0, 0.0, 0.0, 0.0, 0.0, 3.0, 0.0);
-    glScalef (1.0, 2.0, 1.0);
+    gluLookAt (400, 300, 50, 400, 300, 0.0, 0.0, 1.0, 0.0);
     glulucat.displayCharacter();
     glutSwapBuffers();
     
@@ -53,7 +54,7 @@ void reshape (int w, int h) {
     glViewport (0, 0, (GLsizei) w, (GLsizei) h);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity ();
-    glFrustum (-1.0, 1.0, -1.0, 1.0, 1.5, 20.0);
+    glOrtho(0, 800, 0, 600, 0, 100);
     glMatrixMode(GL_MODELVIEW);
 }
 
@@ -61,13 +62,18 @@ void reshape (int w, int h) {
 void keyboard (unsigned char key, int x, int y) {
     switch (key) {
         case 'A': case 'a':
-            glulucat.moveX(-1);
+            glulucat.moveX(-10);
             glutPostRedisplay();
             
             break;
         
         case 'D': case 'd':
-            glulucat.moveX(1);
+            glulucat.moveX(10);
+            glutPostRedisplay();
+            break;
+            
+        case 'W': case 'w':
+            glulucat.jump(true);
             glutPostRedisplay();
             break;
         
@@ -79,7 +85,7 @@ void keyboard (unsigned char key, int x, int y) {
 
 int main (int argc, char** argv) {
     
-    std::cout << "Hello World!!!" << std::endl;
+    std::cout << "Hello Glulucat!!!" << std::endl;
     
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
