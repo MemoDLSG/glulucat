@@ -19,6 +19,8 @@ Glulucat::Glulucat(){
     x = 400;
     y = 300;
     z = 0;
+    
+    y_speed = 0;
 }
 
 void Glulucat::displayCharacter() {
@@ -29,4 +31,3 @@ void Glulucat::displayCharacter() {
     glutWireCube(50.0);
     
 }
-

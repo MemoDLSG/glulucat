@@ -20,6 +20,7 @@ class Glulucat: public Character {
 public:
     Glulucat();
     void displayCharacter();
+    //int airTime(int);
 };
 
 #endif /* defined(__Glulucat__Glulucat__) */

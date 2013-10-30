@@ -58,28 +58,51 @@ void reshape (int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
+void airTime(int time){
+    if (glulucat.jumping) {
+        glulucat.y_speed += 25;
+        glulucat.moveY(glulucat.y_speed);
+    }
+    if (glulucat.y_speed >= 25) {
+        glulucat.y_speed -= 1;
+        glulucat.moveY(-2);
+        glulucat.jump(false);
+    }
+    glutPostRedisplay();
+    
+    glutTimerFunc(25,airTime,0);
+    
+}
 
 void keyboard (unsigned char key, int x, int y) {
     switch (key) {
         case 'A': case 'a':
             glulucat.moveX(-10);
-            glutPostRedisplay();
             
             break;
         
         case 'D': case 'd':
             glulucat.moveX(10);
-            glutPostRedisplay();
+            
             break;
             
         case 'W': case 'w':
             glulucat.jump(true);
-            glutPostRedisplay();
+            glulucat.y_speed = 25;
             break;
-        
+        case 'S': case 's':
+            glulucat.jump(false);
+            
+            break;
+            
+        case 27:
+            exit(0);
+            break;
+            
         default:
             break;
     }
+    glutPostRedisplay();
 }
 
 
@@ -96,6 +119,7 @@ int main (int argc, char** argv) {
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);
+    glutTimerFunc(25, airTime, 5);
     glutMainLoop();
 
     return 0;
