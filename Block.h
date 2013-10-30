@@ -47,10 +47,11 @@ public:
     void setItem(blockItem item);
     void hitBlock();
     void DrawBlock();
-
-private:
     int x;
     int y;
+
+private:
+
     blockType type;
     blockItem item;
 };

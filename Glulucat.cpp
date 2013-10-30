@@ -10,7 +10,7 @@
 
 Glulucat::Glulucat(){
     x = 400;
-    y = 137.5;
+    y = 500;
     z = 0;
 }
 
@@ -19,8 +19,8 @@ void Glulucat::displayCharacter() {
     glLoadIdentity();
     glColor3f(1.0, 1.0, 1.0);
     glTranslatef(x, y, z);
-    glScalef (2.0, 1.5, 0.5);
-    glutWireCube(50.0);
+    //glScalef (2.0, 1.5, 0.5);
+    glutWireCube(100.0);
     glPopMatrix();
 }
 

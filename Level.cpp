@@ -17,6 +17,10 @@ Level::Level(void){
     for(int i=0; i<8; i++){
         blocks.push_back(Block(50+i*100, 50, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
     }
+
+    for(int i=0; i<3; i++){
+        blocks.push_back(Block(350+i*100, 250, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
+    }
 }
 
 Level::Level(int pwidth, int pheight){

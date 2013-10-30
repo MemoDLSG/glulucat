@@ -17,6 +17,11 @@
 #include <GL/glut.h>
 #endif
 
+#include <vector>
+#include "Block.h"
+
+using namespace std;
+
 class Character {
 
     bool powerup;
@@ -32,6 +37,7 @@ public:
     bool jump(bool);
     int moveX(int);
     int moveY(int);
+    void Fall(vector<Block>);
 
 protected:
     int x;

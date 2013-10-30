@@ -36,9 +36,14 @@ void init(void) {
     glShadeModel(GL_FLAT);
 }
 
+void timer(int blah){
+    glulucat.Fall(level.blocks);
+    glutTimerFunc(20, timer, blah);
+    glutPostRedisplay();
+}
 
 /**
- * Manda a pintar el Glulucat
+ * Manda a pintar el nivel y todo lo demas
  **/
 void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -97,6 +102,7 @@ int main (int argc, char** argv) {
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);
+    glutTimerFunc(20, timer, 1);
     glutMainLoop();
 
     return 0;

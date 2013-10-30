@@ -27,7 +27,7 @@ class Level {
 
     int width;
     int height;
-    std::vector<Block> blocks;
+
 
 public:
     Level();
@@ -36,6 +36,7 @@ public:
     Level(int, int, std::vector<Block>);
     void AddBlock(Block);
     void DrawLevel();
+    std::vector<Block> blocks;
 };
 
 #endif /* defined(__Glulucat__Level__) */
