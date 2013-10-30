@@ -12,8 +12,8 @@
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
-#include <GL/glut.h>
 #include <windows.h>
+#include <GL/glut.h>
 #endif
 
 #include <iostream>
@@ -38,15 +38,16 @@ void init(void) {
 
 
 /**
- * Manda a pintar el Glulucat 
+ * Manda a pintar el Glulucat
  **/
 void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     gluLookAt (400, 300, 50, 400, 300, 0.0, 0.0, 1.0, 0.0);
+    level.DrawLevel();
     glulucat.displayCharacter();
     glutSwapBuffers();
-    
+
 }
 
 
@@ -64,19 +65,19 @@ void keyboard (unsigned char key, int x, int y) {
         case 'A': case 'a':
             glulucat.moveX(-10);
             glutPostRedisplay();
-            
+
             break;
-        
+
         case 'D': case 'd':
             glulucat.moveX(10);
             glutPostRedisplay();
             break;
-            
+
         case 'W': case 'w':
             glulucat.jump(true);
             glutPostRedisplay();
             break;
-        
+
         default:
             break;
     }
@@ -84,9 +85,9 @@ void keyboard (unsigned char key, int x, int y) {
 
 
 int main (int argc, char** argv) {
-    
+
     std::cout << "Hello Glulucat!!!" << std::endl;
-    
+
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize (800, 600);

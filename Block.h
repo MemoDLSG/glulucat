@@ -10,6 +10,13 @@
 #ifndef __Glulucat__Block__
 #define __Glulucat__Block__
 
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <windows.h>
+#include <GL/glut.h>
+#endif
+
 enum blockType {
      BLOCK_BREAKABLE = 10000,
      BLOCK_UNBREAKABLE = 10001,
@@ -24,9 +31,9 @@ enum blockItem {
 
 
 class Block {
-    
+
 public:
-    
+
     Block();
     Block(int, int, blockType, blockItem);
 //    ~Block();
@@ -39,8 +46,8 @@ public:
     void setType(blockType type);
     void setItem(blockItem item);
     void hitBlock();
-    void drawBlock();
-    
+    void DrawBlock();
+
 private:
     int x;
     int y;

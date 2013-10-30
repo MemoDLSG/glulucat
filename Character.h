@@ -10,16 +10,22 @@
 #ifndef Glulucat_character_h
 #define Glulucat_character_h
 
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <windows.h>
+#include <GL/glut.h>
+#endif
 
 class Character {
 
     bool powerup;
     bool flicking;
-    
+
 public:
     int x_speed;
     int y_speed;
-    
+
     Character();
     //~Character();
     void displayCharacter();
@@ -32,9 +38,9 @@ protected:
     int y;
     int z;
     bool jumping;
-    
+
 private:
-    
+
 };
 
 #endif

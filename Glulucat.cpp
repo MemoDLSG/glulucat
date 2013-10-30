@@ -8,25 +8,19 @@
 
 #include "Glulucat.h"
 
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#include <windows.h>
-#endif
-
 Glulucat::Glulucat(){
     x = 400;
-    y = 300;
+    y = 137.5;
     z = 0;
 }
 
 void Glulucat::displayCharacter() {
+    glPushMatrix();
+    glLoadIdentity();
     glColor3f(1.0, 1.0, 1.0);
-    //std::cout << "x: " << x << " y: " << y << " z: " << z << std::endl;
-    glScalef (2.0, 1.5, 0.5);
     glTranslatef(x, y, z);
+    glScalef (2.0, 1.5, 0.5);
     glutWireCube(50.0);
-    
+    glPopMatrix();
 }
 
