@@ -22,7 +22,7 @@ Character::Character(){
 }
 
 void Character::displayCharacter (void) {
-    
+
 }
 
 int Character::moveX(int x){
@@ -42,4 +42,31 @@ bool Character::jump(bool jumping){
     return jumping;
 }
 
-
+void Character::Fall(vector<Block> blocks) {
+    bool onBlock = false;
+    bool touchingOnY;
+    bool touchingOnX;
+    cout << "Estoy en Fall" << endl;
+    for (std::vector<Block>::iterator it = blocks.begin() ; it != blocks.end(); ++it){
+        touchingOnY = (it->y + 50) == (y - 50);
+        touchingOnX = (x >= (it->x - 50)) && (x <= (it->x + 50));
+        /*
+        cout << "Comparando con bloque en" << it->x << "," << it->y << "; ";
+        if(touchingOnY){
+            cout << "Estoy tocando en y! ";
+        }
+        if(touchingOnX){
+            cout << "Estoy tocando en x! ";
+        }
+        cout << endl;
+        */
+        if (touchingOnX && touchingOnY){
+            onBlock = true;
+            //cout << "Esta sobre este bloque!" << endl;
+            break;
+        }
+    }
+    if(!onBlock){
+        moveY(-10);
+    }
+}

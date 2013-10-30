@@ -8,6 +8,7 @@
 //
 
 #include "Block.h"
+#include <iostream>
 
 Block::Block () {
     x = 0;
@@ -32,4 +33,14 @@ blockItem Block::getItem () {
 
 void Block::setType(blockType ptype){
     this->type = ptype;
+}
+
+void Block::DrawBlock(){
+    glLoadIdentity();
+    glPushMatrix();
+    glColor3f(x/800.0, (1-x/800.0), 1.0); //color provisiorio mientras se ponen texturas
+    glTranslatef(x, y, 0);
+    //glTranslatef(700.0, 350.0, 0);
+    glutSolidCube(100.0);
+    glPopMatrix();
 }

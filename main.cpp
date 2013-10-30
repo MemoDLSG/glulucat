@@ -12,8 +12,8 @@
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
-#include <GL/glut.h>
 #include <windows.h>
+#include <GL/glut.h>
 #endif
 
 #include <iostream>
@@ -36,17 +36,33 @@ void init(void) {
     glShadeModel(GL_FLAT);
 }
 
+void timer(int una_vars){
+    glulucat.Fall(level.blocks);
+
+	/**
+	 * Aqui el glulucat salta
+	 * **/
+    if (glulucat.y_speed >= 25) {
+        glulucat.y_speed -= 1;
+        glulucat.moveY(-2);
+        glulucat.jump(false);
+    }
+    glutPostRedisplay();
+    
+    glutTimerFunc(25,timer,0);
+}
 
 /**
- * Manda a pintar el Glulucat 
+ * Manda a pintar el nivel y todo lo demas
  **/
 void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     gluLookAt (400, 300, 50, 400, 300, 0.0, 0.0, 1.0, 0.0);
+    level.DrawLevel();
     glulucat.displayCharacter();
     glutSwapBuffers();
-    
+
 }
 
 
@@ -58,38 +74,28 @@ void reshape (int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
-void airTime(int time){
-    if (glulucat.jumping) {
-        glulucat.y_speed += 25;
-        glulucat.moveY(glulucat.y_speed);
-    }
-    if (glulucat.y_speed >= 25) {
-        glulucat.y_speed -= 1;
-        glulucat.moveY(-2);
-        glulucat.jump(false);
-    }
-    glutPostRedisplay();
-    
-    glutTimerFunc(25,airTime,0);
-    
-}
-
 void keyboard (unsigned char key, int x, int y) {
     switch (key) {
         case 'A': case 'a':
             glulucat.moveX(-10);
-            
+
             break;
-        
+
         case 'D': case 'd':
             glulucat.moveX(10);
             
             break;
-            
+
         case 'W': case 'w':
-            glulucat.jump(true);
-            glulucat.y_speed = 25;
+			if(!glulucat.jumping) {
+            	glulucat.jump(true);
+			} else {
+				glulucat.y_speed = 25;
+	        	glulucat.moveY(glulucat.y_speed);
+			}
+            			
             break;
+
         case 'S': case 's':
             glulucat.jump(false);
             
@@ -107,9 +113,9 @@ void keyboard (unsigned char key, int x, int y) {
 
 
 int main (int argc, char** argv) {
-    
+
     std::cout << "Hello Glulucat!!!" << std::endl;
-    
+
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize (800, 600);
@@ -119,7 +125,7 @@ int main (int argc, char** argv) {
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);
-    glutTimerFunc(25, airTime, 5);
+    glutTimerFunc(25, timer, 1);
     glutMainLoop();
 
     return 0;
