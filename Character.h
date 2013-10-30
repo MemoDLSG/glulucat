@@ -35,10 +35,11 @@ public:
     Character();
     //~Character();
     void displayCharacter();
-    bool jump(bool);
-    int airTime(int);
+    bool isJumping(bool);
     int moveX(int);
     int moveY(int);
+    
+    int jump(int);
     void Fall(vector<Block>);
 
 protected:

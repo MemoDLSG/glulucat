@@ -42,10 +42,8 @@ void timer(int una_vars){
 	/**
 	 * Aqui el glulucat salta
 	 * **/
-    if (glulucat.y_speed >= 25) {
-        glulucat.y_speed -= 1;
-        glulucat.moveY(-2);
-        glulucat.jump(false);
+    if (glulucat.jumping) {
+        glulucat.jump(50);
     }
     glutPostRedisplay();
     
@@ -88,16 +86,16 @@ void keyboard (unsigned char key, int x, int y) {
 
         case 'W': case 'w':
 			if(!glulucat.jumping) {
-            	glulucat.jump(true);
+            	glulucat.isJumping(true);
+                glulucat.jump(5);
 			} else {
-				glulucat.y_speed = 25;
-	        	glulucat.moveY(glulucat.y_speed);
-			}
-            			
+                std::cout << "Ya estoy saltando wey " << glulucat.jumping << std::endl;
+            }
+            
             break;
 
         case 'S': case 's':
-            glulucat.jump(false);
+            glulucat.isJumping(false);
             
             break;
             
