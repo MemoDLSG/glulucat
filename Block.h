@@ -17,6 +17,8 @@
 #include <GL/glut.h>
 #endif
 
+#define GLULUCAT_BLOCK_SIZE 50
+
 enum blockType {
      BLOCK_BREAKABLE = 10000,
      BLOCK_UNBREAKABLE = 10001,

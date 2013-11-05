@@ -43,7 +43,7 @@ bool Character::isJumping(bool jumping){
 }
 
 int Character::jump(int y) {
-    if (y_speed <= 55 && jumping) {
+    /*if (y_speed <= 55 && jumping) {
         y_speed = y_speed + 5;
         this->y += y_speed;
     } else if (y_speed > 55 && jumping){
@@ -51,7 +51,8 @@ int Character::jump(int y) {
         y_speed = 0;
     } else {
         std::cout << "jump y_speed : " << y_speed << std::endl;
-    }
+    }*/
+    y_speed = 50;
     return this->y;
 }
 
@@ -59,30 +60,38 @@ void Character::Fall(vector<Block> blocks) {
     bool onBlock = false;
     bool touchingOnY;
     bool touchingOnX;
+    int blockUpperEdge, blockLowerEdge, characterUpperEdge, characterLowerEdge;
+    int blockLeftEdge, blockRightEdge, characterLeftEdge, characterRightEdge;
+    if(y_speed <= 0){
     //std::cout << "Estoy en Fall" << std::endl;
+    y_speed -= 1;
+    moveY(y_speed);
     for (std::vector<Block>::iterator it = blocks.begin() ; it != blocks.end(); ++it){
-        touchingOnY = (it->y + 50) == (y - 50);
-        touchingOnX = (x >= (it->x - 50)) && (x <= (it->x + 50));
-        /*
-        std::cout << "Comparando con bloque en" << it->x << "," << it->y << "; ";
-        if(touchingOnY){
-            std::cout << "Estoy tocando en y! ";
-         
-        }
-        if(touchingOnX){
-            std::cout << "Estoy tocando en x! ";
-        }
-        std::cout << std::endl;
-        */
-        if (touchingOnX && touchingOnY){
+        blockUpperEdge = it->y + GLULUCAT_BLOCK_SIZE/2;
+        blockLowerEdge = it->y - GLULUCAT_BLOCK_SIZE/2;
+        characterUpperEdge = y + GLULUCAT_BLOCK_SIZE/2;
+        characterLowerEdge = y - GLULUCAT_BLOCK_SIZE/2;
+
+        blockLeftEdge = it->x - GLULUCAT_BLOCK_SIZE/2;
+        blockRightEdge = it->x + GLULUCAT_BLOCK_SIZE/2;
+        characterLeftEdge = x - GLULUCAT_BLOCK_SIZE/2;
+        characterRightEdge = x + GLULUCAT_BLOCK_SIZE/2;
+
+        touchingOnY = characterLowerEdge <= blockUpperEdge && characterLowerEdge >= blockLowerEdge;
+
+        touchingOnX = (characterRightEdge > blockLeftEdge && characterRightEdge < blockRightEdge)
+                        || (characterLeftEdge > blockLeftEdge && characterLeftEdge < blockRightEdge);
+
+        if(touchingOnY && touchingOnX){
             onBlock = true;
-            
-            //std::cout << "jumping : " << jumping << " y_speed: " << y_speed << std::endl;
-            //std::cout << "Esta sobre este bloque!" << std::endl;
+            y = it->y + GLULUCAT_BLOCK_SIZE;
+            y_speed = 0;
             break;
         }
     }
-    if(!onBlock){
-        moveY(-10);
+    }
+    else{
+        moveY(y_speed);
+        y_speed -= 5;
     }
 }

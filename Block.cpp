@@ -41,6 +41,6 @@ void Block::DrawBlock(){
     glColor3f(x/800.0, (1-x/800.0), 1.0); //color provisiorio mientras se ponen texturas
     glTranslatef(x, y, 0);
     //glTranslatef(700.0, 350.0, 0);
-    glutSolidCube(100.0);
+    glutSolidCube(GLULUCAT_BLOCK_SIZE);
     glPopMatrix();
 }
