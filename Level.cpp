@@ -16,11 +16,15 @@ Level::Level(void){
 
     blocks.push_back(Block(GLULUCAT_BLOCK_SIZE/2+600, GLULUCAT_BLOCK_SIZE*1.5, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
 
+    for(int i=0; i<4; i++){
+        blocks.push_back(Block(375, (GLULUCAT_BLOCK_SIZE)*(i+1) + GLULUCAT_BLOCK_SIZE*1.5, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
+    }
+
     for(int i=0; i<16; i++){
         blocks.push_back(Block(GLULUCAT_BLOCK_SIZE/2+i*GLULUCAT_BLOCK_SIZE, GLULUCAT_BLOCK_SIZE/2, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
     }
 
-    for(int i=0; i<3; i++){
+    for(int i=0; i<4; i++){
         blocks.push_back(Block(175+i*GLULUCAT_BLOCK_SIZE, 125, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
     }
 }

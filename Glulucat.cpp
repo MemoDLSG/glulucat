@@ -9,7 +9,7 @@
 #include "Glulucat.h"
 
 Glulucat::Glulucat(){
-    x = 400;
+    x = 425;
     y = 500;
     z = 0;
 

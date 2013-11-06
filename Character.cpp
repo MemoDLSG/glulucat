@@ -44,19 +44,26 @@ int Character::MoveX(int x, vector<Block> blocks){
 
         blockLeftEdge = it->x - GLULUCAT_BLOCK_SIZE/2;
         blockRightEdge = it->x + GLULUCAT_BLOCK_SIZE/2;
-        characterLeftEdge = x - GLULUCAT_BLOCK_SIZE/2;
-        characterRightEdge = x + GLULUCAT_BLOCK_SIZE/2;
+        characterLeftEdge = this -> x - GLULUCAT_BLOCK_SIZE/2;
+        characterRightEdge = this -> x + GLULUCAT_BLOCK_SIZE/2;
 
-        touchingOnY = (characterLowerEdge < blockUpperEdge && characterLowerEdge > blockLowerEdge)
-                    || (characterUpperEdge > blockLowerEdge && characterUpperEdge < blockUpperEdge);
+        touchingOnY = (characterLowerEdge < blockUpperEdge && characterLowerEdge >= blockLowerEdge)
+                    || (characterUpperEdge > blockLowerEdge && characterUpperEdge <= blockUpperEdge);
 
         if(touchingOnY){
+            //std::cout << "Estoy tocando en y" << std::endl;
+            //std::cout << "Character left edge: " << characterLeftEdge << std::endl;
+            //std::cout << "Character right edge: " << characterRightEdge << std::endl;
+            //std::cout << "Block left edge: " << blockLeftEdge << std::endl;
+            //std::cout << "Block right edge: " << blockRightEdge << std::endl;
             if(characterLeftEdge<blockRightEdge && characterLeftEdge >= blockLeftEdge){
+                //std::cout << "Estoy pegando por la izquierda" << std::endl;
                 this -> x = it->x + GLULUCAT_BLOCK_SIZE;
                 break;
             }
 
             if(characterRightEdge>blockLeftEdge && characterRightEdge <= blockRightEdge){
+                //std::cout << "Estoy pegando por la derecha" << std::endl;
                 this -> x = it->x - GLULUCAT_BLOCK_SIZE;
                 break;
             }
@@ -115,8 +122,8 @@ void Character::Fall(vector<Block> blocks) {
 
         touchingOnY = characterLowerEdge <= blockUpperEdge && characterLowerEdge >= blockLowerEdge;
 
-        touchingOnX = (characterRightEdge > blockLeftEdge && characterRightEdge < blockRightEdge)
-                        || (characterLeftEdge > blockLeftEdge && characterLeftEdge < blockRightEdge);
+        touchingOnX = (characterLeftEdge < blockRightEdge && characterLeftEdge >= blockLeftEdge)
+                        || (characterRightEdge > blockLeftEdge && characterRightEdge <= blockRightEdge);
 
         if(touchingOnY && touchingOnX){
             onBlock = true;
