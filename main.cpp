@@ -75,12 +75,12 @@ void reshape (int w, int h) {
 void keyboard (unsigned char key, int x, int y) {
     switch (key) {
         case 'A': case 'a':
-            glulucat.moveX(-10);
+            glulucat.MoveX(-10, level.blocks);
 
             break;
 
         case 'D': case 'd':
-            glulucat.moveX(10);
+            glulucat.MoveX(10, level.blocks);
 
             break;
 

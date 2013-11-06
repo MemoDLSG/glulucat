@@ -31,14 +31,14 @@ public:
     int x_speed;
     int y_speed;
     bool jumping;
-    
+
     Character();
     //~Character();
     void displayCharacter();
     bool isJumping(bool);
-    int moveX(int);
+    int MoveX(int, vector<Block>);
     int moveY(int);
-    
+
     int jump(int);
     void Fall(vector<Block>);
 

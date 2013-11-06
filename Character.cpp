@@ -25,8 +25,44 @@ void Character::displayCharacter (void) {
 
 }
 
-int Character::moveX(int x){
+/*int Character::moveX(int x){
     this -> x += x;
+    //std::cout << "Move x: " << x << std::endl;
+    return x;
+}*/
+
+int Character::MoveX(int x, vector<Block> blocks){
+    this -> x += x;
+    bool touchingOnY;
+    int blockUpperEdge, blockLowerEdge, characterUpperEdge, characterLowerEdge;
+    int blockLeftEdge, blockRightEdge, characterLeftEdge, characterRightEdge;
+    for (std::vector<Block>::iterator it = blocks.begin() ; it != blocks.end(); ++it){
+        blockUpperEdge = it->y + GLULUCAT_BLOCK_SIZE/2;
+        blockLowerEdge = it->y - GLULUCAT_BLOCK_SIZE/2;
+        characterUpperEdge = y + GLULUCAT_BLOCK_SIZE/2;
+        characterLowerEdge = y - GLULUCAT_BLOCK_SIZE/2;
+
+        blockLeftEdge = it->x - GLULUCAT_BLOCK_SIZE/2;
+        blockRightEdge = it->x + GLULUCAT_BLOCK_SIZE/2;
+        characterLeftEdge = x - GLULUCAT_BLOCK_SIZE/2;
+        characterRightEdge = x + GLULUCAT_BLOCK_SIZE/2;
+
+        touchingOnY = (characterLowerEdge < blockUpperEdge && characterLowerEdge > blockLowerEdge)
+                    || (characterUpperEdge > blockLowerEdge && characterUpperEdge < blockUpperEdge);
+
+        if(touchingOnY){
+            if(characterLeftEdge<blockRightEdge && characterLeftEdge >= blockLeftEdge){
+                this -> x = it->x + GLULUCAT_BLOCK_SIZE;
+                break;
+            }
+
+            if(characterRightEdge>blockLeftEdge && characterRightEdge <= blockRightEdge){
+                this -> x = it->x - GLULUCAT_BLOCK_SIZE;
+                break;
+            }
+        }
+    }
+
     //std::cout << "Move x: " << x << std::endl;
     return x;
 }
