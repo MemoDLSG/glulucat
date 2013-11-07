@@ -30,17 +30,16 @@ class Character {
 public:
     int x_speed;
     int y_speed;
-    bool jumping;
+    bool on_air;
 
     Character();
     //~Character();
     void displayCharacter();
-    bool isJumping(bool);
-    int MoveX(int, vector<Block>);
-    int moveY(int);
-
-    int jump(int);
-    void Fall(vector<Block>);
+    bool isOnAir(bool);
+    void startJumping();
+    void jump(vector<Block>);
+    int moveY(vector<Block>);
+    int moveX(int, vector<Block>);
 
 protected:
     int x;

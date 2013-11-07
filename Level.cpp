@@ -19,6 +19,10 @@ Level::Level(void){
     for(int i=0; i<4; i++){
         blocks.push_back(Block(375, (GLULUCAT_BLOCK_SIZE)*(i+1) + GLULUCAT_BLOCK_SIZE*1.5, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
     }
+    
+    for(int i=0; i<3; i++){
+        blocks.push_back(Block(375+i*GLULUCAT_BLOCK_SIZE, 325, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
+    }
 
     for(int i=0; i<16; i++){
         blocks.push_back(Block(GLULUCAT_BLOCK_SIZE/2+i*GLULUCAT_BLOCK_SIZE, GLULUCAT_BLOCK_SIZE/2, BLOCK_UNBREAKABLE, BLOCK_NOITEM));

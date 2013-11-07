@@ -1,12 +1,10 @@
 //
-//  main.cpp
 //  Glulucat
 //
-//  Created by
-//      Guillermo de lo Santos
-//      David Tovar Goris
-//  on 10/16/13.
-//  Copyright (c) 2013 Glulucat. All rights reserved and meowed.
+//  Created by David Tovar Goris
+//         and Guillermo de los Santos
+//          on 10/15/13.
+//  Copyright (c) 2013 Glulucat. All rights reserved.
 //
 
 #ifdef __APPLE__
@@ -37,14 +35,9 @@ void init(void) {
 }
 
 void timer(int una_vars){
-    glulucat.Fall(level.blocks);
 
-	/**
-	 * Aqui el glulucat salta
-	 * **/
-    /*if (glulucat.jumping) {
-        glulucat.jump(50);
-    }*/
+    glulucat.moveY(level.blocks);
+
     glutPostRedisplay();
 
     glutTimerFunc(25,timer,0);
@@ -75,27 +68,22 @@ void reshape (int w, int h) {
 void keyboard (unsigned char key, int x, int y) {
     switch (key) {
         case 'A': case 'a':
-            glulucat.MoveX(-10, level.blocks);
+            glulucat.moveX(-10, level.blocks);
 
             break;
 
         case 'D': case 'd':
-            glulucat.MoveX(10, level.blocks);
+            glulucat.moveX(10, level.blocks);
 
             break;
 
         case 'W': case 'w':
-			if(!glulucat.jumping) {
-            	//glulucat.isJumping(true);
-                glulucat.jump(5);
-			} else {
-                std::cout << "Ya estoy saltando wey " << glulucat.jumping << std::endl;
-            }
+            glulucat.startJumping();
 
             break;
 
         case 'S': case 's':
-            glulucat.isJumping(false);
+            glulucat.isOnAir(false);
 
             break;
 

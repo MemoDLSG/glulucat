@@ -16,22 +16,16 @@ Character::Character(){
     z = 0;
     x_speed = 0;
     y_speed = 0;
-    jumping = false;
+    on_air = true;
     powerup = false;
     flicking = false;
 }
 
 void Character::displayCharacter (void) {
-
+    
 }
 
-/*int Character::moveX(int x){
-    this -> x += x;
-    //std::cout << "Move x: " << x << std::endl;
-    return x;
-}*/
-
-int Character::MoveX(int x, vector<Block> blocks){
+int Character::moveX(int x, vector<Block> blocks){
     this -> x += x;
     bool touchingOnY;
     int blockUpperEdge, blockLowerEdge, characterUpperEdge, characterLowerEdge;
@@ -39,17 +33,17 @@ int Character::MoveX(int x, vector<Block> blocks){
     for (std::vector<Block>::iterator it = blocks.begin() ; it != blocks.end(); ++it){
         blockUpperEdge = it->y + GLULUCAT_BLOCK_SIZE/2;
         blockLowerEdge = it->y - GLULUCAT_BLOCK_SIZE/2;
-        characterUpperEdge = y + GLULUCAT_BLOCK_SIZE/2;
-        characterLowerEdge = y - GLULUCAT_BLOCK_SIZE/2;
-
+        characterUpperEdge = this->y + GLULUCAT_BLOCK_SIZE/2;
+        characterLowerEdge = this->y - GLULUCAT_BLOCK_SIZE/2;
+        
         blockLeftEdge = it->x - GLULUCAT_BLOCK_SIZE/2;
         blockRightEdge = it->x + GLULUCAT_BLOCK_SIZE/2;
         characterLeftEdge = this -> x - GLULUCAT_BLOCK_SIZE/2;
         characterRightEdge = this -> x + GLULUCAT_BLOCK_SIZE/2;
-
+        
         touchingOnY = (characterLowerEdge < blockUpperEdge && characterLowerEdge >= blockLowerEdge)
-                    || (characterUpperEdge > blockLowerEdge && characterUpperEdge <= blockUpperEdge);
-
+        || (characterUpperEdge > blockLowerEdge && characterUpperEdge <= blockUpperEdge);
+        
         if(touchingOnY){
             //std::cout << "Estoy tocando en y" << std::endl;
             //std::cout << "Character left edge: " << characterLeftEdge << std::endl;
@@ -61,7 +55,7 @@ int Character::MoveX(int x, vector<Block> blocks){
                 this -> x = it->x + GLULUCAT_BLOCK_SIZE;
                 break;
             }
-
+            
             if(characterRightEdge>blockLeftEdge && characterRightEdge <= blockRightEdge){
                 //std::cout << "Estoy pegando por la derecha" << std::endl;
                 this -> x = it->x - GLULUCAT_BLOCK_SIZE;
@@ -69,72 +63,74 @@ int Character::MoveX(int x, vector<Block> blocks){
             }
         }
     }
-
+    
     //std::cout << "Move x: " << x << std::endl;
     return x;
 }
 
-int Character::moveY(int py){
-    y = y + py;
-    //std::cout << "Move y: " << y << std::endl;
-    return this->y;
+bool Character::isOnAir(bool on_air){
+    this -> on_air = on_air;
+    return on_air;
 }
 
-bool Character::isJumping(bool jumping){
-    this -> jumping = jumping;
-    return jumping;
+void Character::startJumping(){
+    if (!on_air) {
+        on_air = true;
+        y_speed = GLULUCAT_BLOCK_SIZE/2;
+    }
 }
 
-int Character::jump(int y) {
-    /*if (y_speed <= 55 && jumping) {
-        y_speed = y_speed + 5;
-        this->y += y_speed;
-    } else if (y_speed > 55 && jumping){
-        jumping = false;
-        y_speed = 0;
-    } else {
-        std::cout << "jump y_speed : " << y_speed << std::endl;
-    }*/
-    y_speed = 50;
-    return this->y;
-}
-
-void Character::Fall(vector<Block> blocks) {
-    bool onBlock = false;
-    bool touchingOnY;
+int Character::moveY(vector<Block> blocks) {
+    bool touchingOnYDown, touchingOnYUp;
     bool touchingOnX;
     int blockUpperEdge, blockLowerEdge, characterUpperEdge, characterLowerEdge;
     int blockLeftEdge, blockRightEdge, characterLeftEdge, characterRightEdge;
-    if(y_speed <= 0){
-    //std::cout << "Estoy en Fall" << std::endl;
-    y_speed -= 1;
-    moveY(y_speed);
+    
+    //std::cout << "y_speed: " << y_speed << std::endl;
+    this -> y += y_speed;
+    
+    characterUpperEdge = this->y + GLULUCAT_BLOCK_SIZE / 2;
+    characterLowerEdge = this->y - GLULUCAT_BLOCK_SIZE / 2;
+    characterLeftEdge = this->x - GLULUCAT_BLOCK_SIZE / 2;
+    characterRightEdge = this->x + GLULUCAT_BLOCK_SIZE / 2;
+    
     for (std::vector<Block>::iterator it = blocks.begin() ; it != blocks.end(); ++it){
-        blockUpperEdge = it->y + GLULUCAT_BLOCK_SIZE/2;
-        blockLowerEdge = it->y - GLULUCAT_BLOCK_SIZE/2;
-        characterUpperEdge = y + GLULUCAT_BLOCK_SIZE/2;
-        characterLowerEdge = y - GLULUCAT_BLOCK_SIZE/2;
-
-        blockLeftEdge = it->x - GLULUCAT_BLOCK_SIZE/2;
-        blockRightEdge = it->x + GLULUCAT_BLOCK_SIZE/2;
-        characterLeftEdge = x - GLULUCAT_BLOCK_SIZE/2;
-        characterRightEdge = x + GLULUCAT_BLOCK_SIZE/2;
-
-        touchingOnY = characterLowerEdge <= blockUpperEdge && characterLowerEdge >= blockLowerEdge;
-
+        blockUpperEdge = it->y + GLULUCAT_BLOCK_SIZE / 2;
+        blockLowerEdge = it->y - GLULUCAT_BLOCK_SIZE / 2;
+        blockLeftEdge = it->x - GLULUCAT_BLOCK_SIZE / 2;
+        blockRightEdge = it->x + GLULUCAT_BLOCK_SIZE / 2;
+        
+        touchingOnYDown = characterLowerEdge <= blockUpperEdge && characterLowerEdge >= blockLowerEdge;
+        
+        touchingOnYUp = characterUpperEdge >= blockLowerEdge && characterLowerEdge < blockLowerEdge;
+        
         touchingOnX = (characterLeftEdge < blockRightEdge && characterLeftEdge >= blockLeftEdge)
-                        || (characterRightEdge > blockLeftEdge && characterRightEdge <= blockRightEdge);
-
-        if(touchingOnY && touchingOnX){
-            onBlock = true;
-            y = it->y + GLULUCAT_BLOCK_SIZE;
-            y_speed = 0;
-            break;
+        || (characterRightEdge > blockLeftEdge && characterRightEdge <= blockRightEdge);
+        
+        if(touchingOnX){
+            //std::cout << "Estoy cayendo" << std::endl;
+            
+            if(touchingOnYDown){
+                this->y = it->y + GLULUCAT_BLOCK_SIZE;
+                y_speed = 0;
+                on_air = false;
+                break;
+            }
+            
+            if(touchingOnYUp){
+                y_speed = 0;
+                //std::cout << " Tratando de saltar y no puedo" << std::endl;
+                this->y = it->y - GLULUCAT_BLOCK_SIZE;
+                break;
+            }
+        }else{
+            on_air = true;
         }
     }
+    
+    if(on_air && y_speed > -GLULUCAT_BLOCK_SIZE/2){
+        y_speed -= 2;
     }
-    else{
-        moveY(y_speed);
-        y_speed -= 5;
-    }
+
+    return this->y;
 }
