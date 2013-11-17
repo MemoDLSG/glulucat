@@ -38,5 +38,12 @@ Thumbs.db
 
 # Remove XCode Files #
 ######################
-
 .Glulucat.1
+
+# Remove CddeBlocks Files #
+###########################
+
+Glulucat.cbp
+Glulucat.depend
+Glulucat.layout
+
