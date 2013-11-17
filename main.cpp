@@ -32,14 +32,14 @@ std::vector<Duck> ducks;
 void init(void) {
     glClearColor (0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
-    
+
     glulucat = Glulucat();
-    
+
     for(int i = 0; i < 5; i++) {
         Duck duck = Duck();
         ducks.push_back(duck);
     }
-    
+
 }
 
 void timer(int una_vars){
