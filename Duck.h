@@ -8,6 +8,7 @@
 //
 
 #include "Character.h"
+#include "Block.h"
 
 #ifndef __Glulucat__Duck__
 #define __Glulucat__Duck__
@@ -17,6 +18,11 @@
 
 class Duck: public Character {
     
+public:
+    Duck();
+    
+    int moveX(int, std::vector<Block>);
+    void displayCharacter();
     
 };
 

@@ -32,11 +32,24 @@ std::vector<Duck> ducks;
 void init(void) {
     glClearColor (0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
+    
+    glulucat = Glulucat();
+    
+    for(int i = 0; i < 5; i++) {
+        Duck duck = Duck();
+        ducks.push_back(duck);
+    }
+    
 }
 
 void timer(int una_vars){
 
     glulucat.moveY(level.blocks);
+    int i = 0;
+    for(std::vector<Duck>::iterator it = ducks.begin(); it != ducks.end(); ++it, i++ ) {
+        it->moveY(level.blocks);
+        it->moveX(i, level.blocks);
+    }
 
     glutPostRedisplay();
 
@@ -52,6 +65,9 @@ void display(void) {
     gluLookAt (400, 300, 50, 400, 300, 0.0, 0.0, 1.0, 0.0);
     level.DrawLevel();
     glulucat.displayCharacter();
+    for(std::vector<Duck>::iterator it = ducks.begin() ; it != ducks.end(); ++it) {
+        it->displayCharacter();
+    }
     glutSwapBuffers();
 
 }
