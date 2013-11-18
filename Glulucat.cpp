@@ -107,6 +107,8 @@ void Glulucat::collectYarn(Level& level){
         //level.levelMap[left][down] = GLULUCAT_NOTHING;
         level.UpdateCell(left, down, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+        level.yarnBalls--;
+        //cout << level.yarnBalls << endl;
     }else if(level.levelMap[left][down] == GLULUCAT_CAMERA){
         hasCamera = true;
         level.UpdateCell(left, down, GLULUCAT_NOTHING);
@@ -117,6 +119,8 @@ void Glulucat::collectYarn(Level& level){
         //level.levelMap[right][down] = GLULUCAT_NOTHING;
         level.UpdateCell(right, down, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+        level.yarnBalls--;
+        //cout << level.yarnBalls << endl;
     }else if(level.levelMap[right][down] == GLULUCAT_CAMERA){
         hasCamera = true;
         level.UpdateCell(right, down, GLULUCAT_NOTHING);
@@ -127,6 +131,8 @@ void Glulucat::collectYarn(Level& level){
         //level.levelMap[left][up] = GLULUCAT_NOTHING;
         level.UpdateCell(left, up, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+        level.yarnBalls--;
+        //cout << level.yarnBalls << endl;
     }else if(level.levelMap[left][up] == GLULUCAT_CAMERA){
         hasCamera = true;
         level.UpdateCell(left, up, GLULUCAT_NOTHING);
@@ -137,6 +143,8 @@ void Glulucat::collectYarn(Level& level){
         //level.levelMap[right][up] = GLULUCAT_NOTHING;
         level.UpdateCell(right, up, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+        level.yarnBalls--;
+        //cout << level.yarnBalls << endl;
     }else if(level.levelMap[right][up] == GLULUCAT_CAMERA){
         hasCamera = true;
         level.UpdateCell(right, up, GLULUCAT_NOTHING);

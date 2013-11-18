@@ -40,6 +40,7 @@ public:
     int width;
     int height;
     int levelMap[16][12];
+    int yarnBalls;
     //Glulucat glulucat;
     //vector<Duck> ducks;
 

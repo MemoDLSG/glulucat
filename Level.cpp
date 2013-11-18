@@ -11,11 +11,14 @@
 #include "Glulucat.h"
 #include "Duck.h"
 
-Level::Level(){}
+Level::Level(){
+    yarnBalls = 0;
+}
 
 void Level::StartDefault(){
     width = 16;
     height = 12;
+    yarnBalls = 0;
 
     for(int i=0; i<width; i++){
             levelMap[i][0] = GLULUCAT_BLOCK;

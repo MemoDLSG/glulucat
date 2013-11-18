@@ -35,7 +35,7 @@ Materials materials;
 
 bool pause;
 
-enum e_states { START, CREDITS, PLAYING, SCORES, GAMEOVER } state;
+enum e_states { START, CREDITS, PLAYING, SCORES, GAMEOVER, WINNERISYOU } state;
 
 std::vector<string> readScores() {
     std::vector<string> lines;
@@ -67,6 +67,7 @@ void startLevel(string file){
     string line;
     int x, y;
     Duck duck;
+    level.yarnBalls = 0;
     while (!ducks.empty()){
         ducks.pop_back();
     }
@@ -92,6 +93,8 @@ void startLevel(string file){
                         duck = Duck(x, y);
                         ducks.push_back(duck);
                         break;
+                    case '2':
+                        level.yarnBalls++;
                     default:
                         level.levelMap[i][j] = line.at(i) - '0';
                         break;
@@ -150,10 +153,38 @@ void timer(int una_vars) {
     	}else{
             glulucat.bumpDucks(ducks);
     	}
+
+    	//WINNING CONDITION
+    	if(level.yarnBalls == 0 && ducks.empty()){
+            //cout << "A WINNER IS YOU!" << endl;
+            state = WINNERISYOU;
+    	}
 	}
     glutPostRedisplay();
 
     glutTimerFunc(25,timer,0);
+}
+
+void initializeLight(){
+    glEnable(GL_LIGHT0);
+    GLfloat diffuse[ ] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat ambient[ ] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat specular[ ] = {1.0, 1.0, 1.0, 1.0};
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+
+    GLfloat position[] = {400, 300, 20, 0.0};
+    glLightfv(GL_LIGHT0, GL_POSITION, position);
+
+    glEnable(GL_LIGHT1);
+
+    glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, specular);
+
+    glLightfv(GL_LIGHT1, GL_POSITION, position);
 }
 
 /**
@@ -182,13 +213,23 @@ void display(void) {
             screen.DrawGameOver();
             break;
 
+        case WINNERISYOU:
+            screen.DrawWinnerIsYOU();
+            break;
+
         case PLAYING:
+            glEnable(GL_LIGHTING);
+            initializeLight();
+            materials.setMaterial(8);
             level.DrawLevel();
-            glulucat.displayCharacter();
+            materials.setMaterial(2);
             glulucat.displayMetadata();
+            materials.setMaterial(10);
+            glulucat.displayCharacter();
             for(std::vector<Duck>::iterator it = ducks.begin() ; it != ducks.end(); ++it) {
                 it->displayCharacter();
             }
+            glDisable(GL_LIGHTING);
             break;
 
         default:
