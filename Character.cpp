@@ -21,24 +21,23 @@ Character::Character(){
     flicking = false;
 }
 
-void Character::displayCharacter (void) {
+//Funciones a implementar en Glulucat y Duck independientemente!
+void Character::displayCharacter (void) {}
 
-}
-
-int Character::moveX(Level level){
+int Character::moveX(int levelMap[][12]){
     this -> x += x_speed;
 
     float i = this->x/(GLULUCAT_BLOCK_SIZE*1.0) - 0.5;
     float j = this->y/(GLULUCAT_BLOCK_SIZE*1.0) - 0.5;
 
     //touching on X left
-    if(level.levelMap[(int)floor(i)][(int)floor(j)] == GLULUCAT_BLOCK || level.levelMap[(int)floor(i)][(int)ceil(j)] == GLULUCAT_BLOCK){
+    if(levelMap[(int)floor(i)][(int)floor(j)] == GLULUCAT_BLOCK || levelMap[(int)floor(i)][(int)ceil(j)] == GLULUCAT_BLOCK){
         this->x = (int) ((floor(i)+1.5) * GLULUCAT_BLOCK_SIZE);
         this->x_speed *= -1;
     }
 
     //touching on X right
-    if(level.levelMap[(int)ceil(i)][(int)floor(j)] == GLULUCAT_BLOCK || level.levelMap[(int)ceil(i)][(int)ceil(j)] == GLULUCAT_BLOCK){
+    if(levelMap[(int)ceil(i)][(int)floor(j)] == GLULUCAT_BLOCK || levelMap[(int)ceil(i)][(int)ceil(j)] == GLULUCAT_BLOCK){
         this->x = (int) ((ceil(i)-0.5) * GLULUCAT_BLOCK_SIZE);
         this->x_speed *= -1;
     }
@@ -58,7 +57,7 @@ void Character::startJumping(){
     }
 }
 
-int Character::moveY(Level level) {
+int Character::moveY(int levelMap[][12]) {
 
     this -> y += y_speed;
 
@@ -66,7 +65,7 @@ int Character::moveY(Level level) {
     float j = this->y/(GLULUCAT_BLOCK_SIZE*1.0) - 0.5;
 
     //touching on Y down
-    if(level.levelMap[(int)floor(i)][(int)floor(j)] == GLULUCAT_BLOCK || level.levelMap[(int)ceil(i)][(int)floor(j)] == GLULUCAT_BLOCK){
+    if(levelMap[(int)floor(i)][(int)floor(j)] == GLULUCAT_BLOCK || levelMap[(int)ceil(i)][(int)floor(j)] == GLULUCAT_BLOCK){
         this->y = (int) ((floor(j)+1.5) * GLULUCAT_BLOCK_SIZE);
         y_speed = 0;
         on_air = false;
@@ -75,7 +74,7 @@ int Character::moveY(Level level) {
     }
 
     //touching on Y up
-    if(level.levelMap[(int)floor(i)][(int)ceil(j)] == GLULUCAT_BLOCK || level.levelMap[(int)ceil(i)][(int)ceil(j)] == GLULUCAT_BLOCK){
+    if(levelMap[(int)floor(i)][(int)ceil(j)] == GLULUCAT_BLOCK || levelMap[(int)ceil(i)][(int)ceil(j)] == GLULUCAT_BLOCK){
         this->y = (int) ((ceil(j)-0.5) * GLULUCAT_BLOCK_SIZE);
         y_speed = 0;
     }
