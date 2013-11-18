@@ -19,6 +19,7 @@
 #include "Block.h"
 #include "Level.h"
 #include "Duck.h"
+#include "YarnBall.h"
 
 
 Glulucat glulucat;
@@ -46,6 +47,7 @@ void init(void) {
 
 void timer(int una_vars) {
 
+<<<<<<< HEAD
     if(!pause) {
         glulucat.moveY(level.blocks);
         int i = 0;
@@ -53,6 +55,13 @@ void timer(int una_vars) {
             it->moveY(level.blocks);
             it->moveX(i, level.blocks);
         }
+=======
+    glulucat.moveY(level);
+    int i = 0;
+    for(std::vector<Duck>::iterator it = ducks.begin(); it != ducks.end(); ++it, i++ ) {
+        it->moveY(level);
+        it->moveX(level);
+>>>>>>> a5e4ac59a8bf99f7fc9be2f8e87ceb50e787f9c2
     }
     glutPostRedisplay();
     
@@ -118,15 +127,28 @@ void createMenu (void){
 }
 
 void keyboard (unsigned char key, int x, int y) {
+<<<<<<< HEAD
     if(!pause) {
         switch (key) {
             case 'A': case 'a':
                 glulucat.moveX(-10, level.blocks);
+=======
+    switch (key) {
+        case 'A': case 'a':
+            glulucat.x_speed = -10;
+            glulucat.moveX(level);
+>>>>>>> a5e4ac59a8bf99f7fc9be2f8e87ceb50e787f9c2
 
                 break;
 
+<<<<<<< HEAD
             case 'D': case 'd':
                 glulucat.moveX(10, level.blocks);
+=======
+        case 'D': case 'd':
+            glulucat.x_speed = 10;
+            glulucat.moveX(level);
+>>>>>>> a5e4ac59a8bf99f7fc9be2f8e87ceb50e787f9c2
 
                 break;
 

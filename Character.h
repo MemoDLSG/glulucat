@@ -18,7 +18,9 @@
 #endif
 
 #include <vector>
+#include <tgmath.h>
 #include "Block.h"
+#include "Level.h"
 
 using namespace std;
 
@@ -38,8 +40,8 @@ public:
     bool isOnAir(bool);
     void startJumping();
     void jump(vector<Block>);
-    int moveY(vector<Block>);
-    int moveX(int, vector<Block>);
+    int moveY(Level);
+    int moveX(Level);
 
 protected:
     int x;

@@ -21,7 +21,6 @@ class Duck: public Character {
 public:
     Duck();
     bool facing_right;
-    int moveX(int, std::vector<Block>);
     void displayCharacter();
 
 };
