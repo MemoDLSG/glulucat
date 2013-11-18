@@ -36,10 +36,13 @@ void init(void) {
 
     glulucat = Glulucat();
 
-    for(int i = 0; i < 5; i++) {
-        Duck duck = Duck();
+    for(int i = 0; i < 3; i++) {
+        Duck duck = Duck(200+i*150, GLULUCAT_BLOCK_SIZE*1.5);
+        duck.name = i;
         ducks.push_back(duck);
     }
+    Duck duck = Duck(350, GLULUCAT_BLOCK_SIZE*5.5);
+    ducks.push_back(duck);
 
 }
 
@@ -47,9 +50,14 @@ void timer(int una_vars){
 
     glulucat.moveY(level);
     int i = 0;
-    for(std::vector<Duck>::iterator it = ducks.begin(); it != ducks.end(); ++it, i++ ) {
-        it->moveY(level);
-        it->moveX(level);
+
+    for(int i=0; i<ducks.size(); i++){
+        Duck thisDuck = ducks.at(i);
+        thisDuck.moveY(level);
+        thisDuck.moveX(level);
+        ducks.erase(ducks.begin()+i);
+        thisDuck.bumpDucks(ducks);
+        ducks.insert(ducks.begin()+i, thisDuck);
     }
 
     glutPostRedisplay();
