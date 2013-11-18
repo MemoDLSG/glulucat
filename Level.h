@@ -21,11 +21,15 @@
 #endif
 
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <vector>
 
 #define GLULUCAT_NOTHING 0
 #define GLULUCAT_BLOCK 1
 #define GLULUCAT_YARNBALL 2
+
+using namespace std;
 
 
 class Level {

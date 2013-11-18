@@ -13,74 +13,61 @@ Level::Level(void){
     width = 16;
     height = 12;
 
-    //HARDCODED BLOCKS
-    /*blocks.push_back(Block(GLULUCAT_BLOCK_SIZE/2+600, GLULUCAT_BLOCK_SIZE*1.5, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
-    blocks.push_back(Block(GLULUCAT_BLOCK_SIZE/2+50, GLULUCAT_BLOCK_SIZE*1.5, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
-    for(int i=0; i<4; i++){
-        blocks.push_back(Block(375, (GLULUCAT_BLOCK_SIZE)*(i+1) + GLULUCAT_BLOCK_SIZE*1.5, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
-    }
+    ifstream layout ("C:\\Users\\Memo\\Documents\\GitHub\\glulucat\\level1.txt");
+    string line;
+    int i = 0;
+    if (layout.is_open()){
+        getline(layout, line);
+        this -> width = atoi(line.c_str());
 
-    for(int i=0; i<3; i++){
-        blocks.push_back(Block(375+i*GLULUCAT_BLOCK_SIZE, 325, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
-    }
+        getline(layout, line);
+        this -> height = atoi(line.c_str());
 
-    for(int i=0; i<16; i++){
-        blocks.push_back(Block(GLULUCAT_BLOCK_SIZE/2+i*GLULUCAT_BLOCK_SIZE, GLULUCAT_BLOCK_SIZE/2, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
-    }
-
-    for(int i=0; i<4; i++){
-        blocks.push_back(Block(175+i*GLULUCAT_BLOCK_SIZE, 125, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
-    }*/
-
-    //HARDCODED YARNBALLS
-
-    //RANDOM
-    /*
-    for(int i=0; i<160; i++){
-        for(int j=0; j<120; j++){
-            int prob = rand() % 10;
-            if(prob < 3){
-                blocks.push_back(Block((i+0.5)*GLULUCAT_BLOCK_SIZE, (j+0.5)*GLULUCAT_BLOCK_SIZE, BLOCK_UNBREAKABLE, BLOCK_NOITEM));
-            }else if(prob < 4){
-                yarnballs.push_back(YarnBall((i+0.5)*GLULUCAT_BLOCK_SIZE, (j+0.5)*GLULUCAT_BLOCK_SIZE));
+        for(int j=(height-1); j>=0; j--){
+            getline(layout, line);
+            for(int i=0; i<width; i++){
+                levelMap[i][j] = line.at(i) - '0';
             }
         }
-    }*/
-
-    //RANDOM
-
-    for(int i=0; i<width; i++){
-        levelMap[i][0] = GLULUCAT_BLOCK;
-    }
-    levelMap[2][1] = GLULUCAT_BLOCK;
-    levelMap[13][1] = GLULUCAT_BLOCK;
-
-
-    for(int i=5; i<width-5; i++){
-        levelMap[i][3] = GLULUCAT_BLOCK;
+        layout.close();
     }
 
-    /*for(int i=0; i<width; i++){
-        for(int j=1; j<height; j++){
-            int prob = rand() % 100;
-            if(prob < 25){
-                levelMap[i][j] = GLULUCAT_BLOCK;
-            }else if(prob < 35){
-                levelMap[i][j] = GLULUCAT_YARNBALL;
-            }else{
-                levelMap[i][j] = GLULUCAT_NOTHING;
-            }
+    else{
+        cout << "Unable to open file" << endl;
+        //RANDOM
+        for(int i=0; i<width; i++){
+            levelMap[i][0] = GLULUCAT_BLOCK;
         }
-    }*/
+        levelMap[2][1] = GLULUCAT_BLOCK;
+        levelMap[13][1] = GLULUCAT_BLOCK;
 
-    /*
-    //RANDOM
 
-    //RANDOM
-    for(int i=5; i<width-5; i++){
-        levelMap[i][3] = GLULUCAT_BLOCK;
+        for(int i=5; i<width-5; i++){
+            levelMap[i][3] = GLULUCAT_BLOCK;
+        }
+
+        /*for(int i=0; i<width; i++){
+            for(int j=1; j<height; j++){
+                int prob = rand() % 100;
+                if(prob < 25){
+                    levelMap[i][j] = GLULUCAT_BLOCK;
+                }else if(prob < 35){
+                    levelMap[i][j] = GLULUCAT_YARNBALL;
+                }else{
+                    levelMap[i][j] = GLULUCAT_NOTHING;
+                }
+            }
+        }*/
+
+        /*
+        //RANDOM
+
+        //RANDOM
+        for(int i=5; i<width-5; i++){
+            levelMap[i][3] = GLULUCAT_BLOCK;
+        }
+        */
     }
-    */
 }
 
 Level::Level(int pwidth, int pheight){

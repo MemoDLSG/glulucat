@@ -26,7 +26,7 @@
 	"Block.h"
 	"Level.h"
 
-1384741981 source:c:\users\memo\documents\github\glulucat\duck.cpp
+1384744809 source:c:\users\memo\documents\github\glulucat\duck.cpp
 	"Duck.h"
 
 1384740963 c:\users\memo\documents\github\glulucat\duck.h
@@ -34,14 +34,16 @@
 	"Block.h"
 	<iostream>
 
-1384723517 source:c:\users\memo\documents\github\glulucat\glulucat.cpp
+1384746416 source:c:\users\memo\documents\github\glulucat\glulucat.cpp
 	"Glulucat.h"
+	<sstream>
+	"string.h"
 
-1384269755 c:\users\memo\documents\github\glulucat\glulucat.h
+1384746416 c:\users\memo\documents\github\glulucat\glulucat.h
 	"Character.h"
 	<iostream>
 
-1384742530 source:c:\users\memo\documents\github\glulucat\main.cpp
+1384746416 source:c:\users\memo\documents\github\glulucat\main.cpp
 	<GLUT/glut.h>
 	<windows.h>
 	<GL/glut.h>
@@ -52,16 +54,18 @@
 	"Duck.h"
 	"YarnBall.h"
 
-1384728912 c:\users\memo\documents\github\glulucat\level.h
+1384749039 c:\users\memo\documents\github\glulucat\level.h
 	"Block.h"
 	"YarnBall.h"
 	<GLUT/glut.h>
 	<windows.h>
 	<GL/glut.h>
 	<iostream>
+	<fstream>
+	<string>
 	<vector>
 
-1384737085 source:c:\users\memo\documents\github\glulucat\level.cpp
+1384749361 source:c:\users\memo\documents\github\glulucat\level.cpp
 	"Level.h"
 
 1384725161 c:\users\memo\documents\github\glulucat\yarnball.h
