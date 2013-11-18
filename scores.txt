@@ -1,0 +1,5 @@
+goriswrar , 50
+memo , 100
+gabriel , 200
+vers , 300
+goku , 6000
