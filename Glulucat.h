@@ -16,11 +16,15 @@
 
 class Glulucat: public Character {
     
-
+    
 public:
-    Glulucat();
-    void displayCharacter();
-
+    int lives;
+    int score;
+    
+    Glulucat(void);
+    void displayCharacter(void);
+    void displayMetadata(void);
+    
 };
 
 #endif /* defined(__Glulucat__Glulucat__) */

@@ -28,6 +28,8 @@ std::vector<Duck> ducks;
 
 bool pause;
 
+enum current_screen { START, CREDITS, PLAYING } screen;
+
 /*
 * Limpia el fondo
 */
@@ -75,6 +77,7 @@ void display(void) {
     gluLookAt (400, 300, 50, 400, 300, 0.0, 0.0, 1.0, 0.0);
     level.DrawLevel();
     glulucat.displayCharacter();
+    glulucat.displayMetadata();
     for(std::vector<Duck>::iterator it = ducks.begin() ; it != ducks.end(); ++it) {
         it->displayCharacter();
     }
@@ -111,8 +114,8 @@ void createMenu (void){
     glutAddMenuEntry("Level 2", 2);
     
     others = glutCreateMenu(processMenu);
-    glutAddMenuEntry("Opcion randy", 1);
-    glutAddMenuEntry("Locura!", 2);
+    glutAddMenuEntry("Opcion randy", 3);
+    glutAddMenuEntry("Locura!", 4);
     
     mainMenu = glutCreateMenu(processMenu);
     glutAddSubMenu("Niveles", levels);
