@@ -31,7 +31,6 @@ using namespace std;
 class Character {
 
     bool powerup;
-    bool flicking;
 
 public:
     int x_speed;
