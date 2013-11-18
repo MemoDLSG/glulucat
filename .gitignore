@@ -43,10 +43,6 @@ Glulucat.1
 # Remove CddeBlocks Files #
 ###########################
 
-Glulucat.cbp
-Glulucat.depend
-Glulucat.layout
-
 # Remove other files #
 ######################
 git_to_xcode.sh
