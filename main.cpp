@@ -37,7 +37,7 @@ Materials materials;
 
 bool game_pause;
 
-enum e_states { START, CREDITS, PLAYING, SCORES, GAMEOVER } state;
+enum e_states { START, CREDITS, PLAYING, SCORES, GAMEOVER, WINNERISYOU } state;
 
 void playSound(){
     Sound::initialise();
@@ -151,9 +151,9 @@ void timer(int una_vars) {
     }
     
     if(!game_pause && state == PLAYING) {
-    if(glulucat.lives < 1) {
-        state = GAMEOVER;
-    }
+        if(glulucat.lives < 1) {
+            state = GAMEOVER;
+        }
 
     	glulucat.moveY(level.levelMap);
     	glulucat.collectYarn(level);
@@ -165,7 +165,7 @@ void timer(int una_vars) {
    	    	thisDuck.bumpDucks(ducks);
     	    ducks.insert(ducks.begin()+i, thisDuck);
     	}
-    	glulucat.bumpDucks(ducks);
+
     	if(glulucat.flicking > 0){
             glulucat.flicking--;
     	}else{

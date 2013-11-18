@@ -30,6 +30,7 @@
 #define GLULUCAT_NOTHING 0
 #define GLULUCAT_BLOCK 1
 #define GLULUCAT_YARN 2
+#define GLULUCAT_CAMERA 3
 
 using namespace std;
 
@@ -49,6 +50,7 @@ public:
     void UpdateCell(int, int, int);
     void DrawBlock(int, int);
     void DrawYarn(int, int);
+    void DrawCamera(int, int);
     void PrintLevel();
     void Start(string);
     void StartDefault();

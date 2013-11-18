@@ -20,6 +20,8 @@ Glulucat::Glulucat(void){
     lives = 3;
     score = 0;
     this -> dead = false;
+    this -> hasCamera = false;
+    this -> flicking = 0;
 }
 
 Glulucat::Glulucat(int x, int y){
@@ -45,6 +47,8 @@ Glulucat::Glulucat(int x, int y, int lives){
     score = 0;
     this -> lives = lives;
     this -> dead = false;
+    this -> hasCamera = false;
+    this -> flicking = 0;
 }
 
 void print_bitmap_string(void* font, const char* s) {
@@ -59,11 +63,19 @@ void print_bitmap_string(void* font, const char* s) {
 void Glulucat::displayCharacter(void) {
     glPushMatrix();
     glLoadIdentity();
-    glColor3f(1.0, 1.0, 1.0);
     glTranslatef(x, y, z);
-    glutWireCube(50.0);
+    if(hasCamera){
+        glColor3f(0.0, 0.0, 1.0);
+        glutSolidCube(50.0);
+    }else{
+        if(flicking%2 == 0){
+            glColor3f(1.0, 1.0, 1.0);
+        }else{
+            glColor3f(0.0, 0.0, 1.0);
+        }
+        glutWireCube(50.0);
+    }
     glPopMatrix();
-    ;
 }
 
 void Glulucat::displayMetadata(void){
@@ -145,11 +157,21 @@ void Glulucat::die(){
 }
 
 void Glulucat::bumpedLeft(vector<Duck>& ducks, vector<Duck>::iterator it){
-    die();
+    if(hasCamera){
+        hasCamera = false;
+        flicking = 50;
+    }else{
+        die();
+    }
 }
 
 void Glulucat::bumpedRight(vector<Duck>& ducks, vector<Duck>::iterator it){
-    die();
+    if(hasCamera){
+        hasCamera = false;
+        flicking = 50;
+    }else{
+        die();
+    }
 }
 
 void Glulucat::bumpedDown(vector<Duck>& ducks, vector<Duck>::iterator it){
