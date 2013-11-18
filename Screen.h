@@ -1,0 +1,37 @@
+//
+//  Glulucat
+//
+//  Created by David Tovar Goris
+//         and Guillermo de los Santos
+//          on 10/15/13.
+//  Copyright (c) 2013 Glulucat. All rights reserved.
+//
+
+#ifndef __Glulucat__Screen__
+#define __Glulucat__Screen__
+
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <windows.h>
+#include <GL/glut.h>
+#endif
+
+#include <iostream>
+
+class Screen {
+    
+    int x, y, z;
+    
+public :
+    Screen(void);
+    ~Screen(void);
+    
+    void DrawStartScreen(void);
+    void DrawScores(void);
+    void DrawCredits(void);
+    void DrawGameOver(void);
+    
+};
+
+#endif /* defined(__Glulucat__Screen__) */
