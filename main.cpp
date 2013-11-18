@@ -23,12 +23,8 @@
 #include "Duck.h"
 #include "YarnBall.h"
 #include "Screen.h"
-<<<<<<< HEAD
 #include "Sound.hpp"
-
-=======
 #include "Materials.h"
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
 
 
 Glulucat glulucat;
@@ -55,21 +51,10 @@ void stopSound(){
     
 }
 
-<<<<<<< HEAD
-
-
-std::vector<string> readScores() {
-    std::vector<string> lines;
-    std::ifstream text_lines("scores.txt");
-    
-=======
-enum e_states { START, CREDITS, PLAYING, SCORES, GAMEOVER, WINNERISYOU } state;
-
 std::vector<string> readScores() {
     std::vector<string> lines;
     std::ifstream text_lines("scores.txt");
 
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
     if(text_lines.is_open()){
         std::string line;
         while(getline(text_lines, line) ){
@@ -146,53 +131,30 @@ void init(void) {
     glClearColor (0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
     currentLevel = "level1.txt";
-<<<<<<< HEAD
     game_pause = false;
     state = START;
-    
     scores = readScores();
-    
     screen = Screen();
     startLevel(currentLevel);
     
-=======
-    pause = false;
-    state = START;
-
-    scores = readScores();
-
-    screen = Screen();
-    startLevel(currentLevel);
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
 }
 
 void timer(int una_vars) {
 
     if(glulucat.dead){
-<<<<<<< HEAD
         while (!ducks.empty()){
             ducks.pop_back();
             
         }
         playSound();
-=======
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
         startLevel(currentLevel);
     }
     
-    if(glulucat.lives < 1) {
-        state = GAMEOVER;
-    }
-
-<<<<<<< HEAD
     if(!game_pause && state == PLAYING) {
-=======
     if(glulucat.lives < 1) {
         state = GAMEOVER;
     }
 
-    if(!pause && state == PLAYING) {
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
     	glulucat.moveY(level.levelMap);
     	glulucat.collectYarn(level);
     	for(int i=0; i<ducks.size(); i++){
@@ -203,9 +165,7 @@ void timer(int una_vars) {
    	    	thisDuck.bumpDucks(ducks);
     	    ducks.insert(ducks.begin()+i, thisDuck);
     	}
-<<<<<<< HEAD
     	glulucat.bumpDucks(ducks);
-=======
     	if(glulucat.flicking > 0){
             glulucat.flicking--;
     	}else{
@@ -217,7 +177,6 @@ void timer(int una_vars) {
             //cout << "A WINNER IS YOU!" << endl;
             state = WINNERISYOU;
     	}
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
 	}
     glutPostRedisplay();
 
@@ -253,11 +212,7 @@ void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     gluLookAt (400, 300, 50, 400, 300, 0.0, 0.0, 1.0, 0.0);
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
     switch (state) {
         case START:
             //std::cout << "Start this $#¡+" << std::endl;
@@ -274,13 +229,10 @@ void display(void) {
 
         case GAMEOVER:
             screen.DrawGameOver();
-<<<<<<< HEAD
-=======
             break;
 
         case WINNERISYOU:
             screen.DrawWinnerIsYOU();
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
             break;
 
         case PLAYING:
@@ -302,7 +254,6 @@ void display(void) {
             break;
     }
 
-
     glutSwapBuffers();
 
 }
@@ -319,20 +270,14 @@ void processMenu(int option){
     std::cout << option << std::endl;
     switch (option) {
         case 0:
-<<<<<<< HEAD
             if(state == PLAYING) game_pause = !game_pause;
             else game_pause = false;
-=======
-            if(state == PLAYING) pause = !pause;
-            else pause = false;
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
             break;
         case 1: case 2:
             state = PLAYING;
             break;
         case 100:
             state = START;
-<<<<<<< HEAD
             game_pause = false;
             break;
         case 101:
@@ -346,23 +291,7 @@ void processMenu(int option){
         case 103:
             state = GAMEOVER;
             game_pause = false;
-=======
-            pause = false;
             break;
-        case 101:
-            state = CREDITS;
-            pause = false;
-            break;
-        case 102:
-            state = SCORES;
-            pause = false;
-            break;
-        case 103:
-            state = GAMEOVER;
-            pause = false;
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
-            break;
-
         default:
             break;
     }
@@ -419,22 +348,14 @@ void keyboard (unsigned char key, int x, int y) {
                 }
 
                 break;
-<<<<<<< HEAD
-                
-=======
 
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
             case 'M': case 'm':
                 if (state == GAMEOVER) {
                     state = START;
                     glulucat.lives = 3;
                 }
                 break;
-<<<<<<< HEAD
-                
-=======
 
->>>>>>> 9c8aefb116deec40c433b1490cfd3044d28c619c
             case 'N': case 'n':
                 if (state == START) {
                     state = PLAYING;
@@ -442,12 +363,14 @@ void keyboard (unsigned char key, int x, int y) {
                     startLevel(currentLevel);
                 }
                 break;
+
             case 'C': case 'c':
                 if (state != GAMEOVER && state != PLAYING
                     && state != SCORES) {
                     state = CREDITS;
                 }
                 break;
+
             case 'P': case 'p':
                 if (state == START) {
                     state = SCORES;
