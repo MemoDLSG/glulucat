@@ -20,23 +20,22 @@
 #include "Level.h"
 #include "Duck.h"
 #include "YarnBall.h"
-#include "StartScreen.h"
+#include "Screen.h"
 
 
 Glulucat glulucat;
 Level level;
-StartScreen start_screen;
+Screen screen;
 std::vector<Duck> ducks;
 string currentLevel;
 
 bool pause;
 
-enum current_screen { START, CREDITS, PLAYING, SCORES, GAMEOVER } screen;
+enum e_states { START, CREDITS, PLAYING, SCORES, GAMEOVER } state;
 
 /*
 * Limpia el fondo
 */
-
 void startDefault(){
     for(int i = 0; i < 3; i++) {
         Duck duck = Duck(150, GLULUCAT_BLOCK_SIZE*(i+1.5));
@@ -49,7 +48,7 @@ void startDefault(){
 void startLevel(string file){
     ifstream layout (file.c_str());
     string line;
-    int x, y, i = 0;
+    int x, y;
     Duck duck;
     if (layout.is_open()){
         getline(layout, line);
@@ -91,11 +90,11 @@ void startLevel(string file){
 void init(void) {
     glClearColor (0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
-    currentLevel = "C:\\Users\\Memo\\Documents\\GitHub\\glulucat\\level1.txt";
+    currentLevel = "level1.txt";
     pause = false;
-    screen = START;
+    state = START;
     
-    start_screen = StartScreen();
+    screen = Screen();
     startLevel(currentLevel);
 
 }
@@ -108,8 +107,12 @@ void timer(int una_vars) {
         }
         startLevel(currentLevel);
     }
+    
+    if(glulucat.lives < 1) {
+        state = GAMEOVER;
+    }
 
-    if(!pause && screen == PLAYING) {
+    if(!pause && state == PLAYING) {
     	glulucat.moveY(level.levelMap);
     	glulucat.collectYarn(level);
 
@@ -121,11 +124,7 @@ void timer(int una_vars) {
    	    	thisDuck.bumpDucks(ducks);
     	    ducks.insert(ducks.begin()+i, thisDuck);
     	}
-    	if(glulucat.flicking > 0){
-            glulucat.flicking--;
-    	}else{
-            glulucat.bumpDucks(ducks);
-    	}
+    	glulucat.bumpDucks(ducks);
 	}
     glutPostRedisplay();
 
@@ -140,22 +139,22 @@ void display(void) {
     glLoadIdentity();
     gluLookAt (400, 300, 50, 400, 300, 0.0, 0.0, 1.0, 0.0);
     
-    switch (screen) {
+    switch (state) {
         case START:
             //std::cout << "Start this $#¡+" << std::endl;
-            start_screen.DrawScreen();
+            screen.DrawStartScreen();
             break;
             
         case CREDITS:
-            
+            screen.DrawCredits();
             break;
             
         case SCORES:
-            
+            screen.DrawScores();
             break;
             
         case GAMEOVER:
-            
+            screen.DrawGameOver();
             break;
             
         case PLAYING:
@@ -191,16 +190,19 @@ void processMenu(int option){
             pause = !pause;
             break;
         case 1: case 2:
-            screen = PLAYING;
+            state = PLAYING;
             break;
         case 100:
-            screen = START;
+            state = START;
             break;
         case 101:
-            screen = CREDITS;
+            state = CREDITS;
             break;
         case 102:
-            screen = SCORES;
+            state = SCORES;
+            break;
+        case 103:
+            state = GAMEOVER;
             break;
 
         default:
@@ -250,15 +252,24 @@ void keyboard (unsigned char key, int x, int y) {
                 break;
 
             case 'S': case 's':
-                glulucat.isOnAir(false);
+                if (state == PLAYING) {
+                    glulucat.isOnAir(false);
+                } else if (state == GAMEOVER) {
+                    exit(0);
+                } else if (state == SCORES || state == CREDITS) {
+                    state = START;
+                }
 
                 break;
                 
             case 'N': case 'n':
-                if (screen == START || screen == GAMEOVER) {
-                    screen = PLAYING;
+                if (state == START || state == GAMEOVER) {
+                    state = PLAYING;
+                    glulucat.lives = 3;
+                    startLevel(currentLevel);
                 }
                 break;
+                
 
             case 27:
                 exit(0);

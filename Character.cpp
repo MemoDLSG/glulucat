@@ -18,6 +18,7 @@ Character::Character(){
     y_speed = 0;
     on_air = true;
     powerup = false;
+    flicking = false;
 }
 
 //Funciones a implementar en Glulucat y Duck independientemente!
