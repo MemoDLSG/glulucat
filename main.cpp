@@ -36,10 +36,10 @@ void init(void) {
 
     glulucat = Glulucat();
 
-    /*for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < 5; i++) {
         Duck duck = Duck();
         ducks.push_back(duck);
-    }*/
+    }
 
 }
 
@@ -49,7 +49,7 @@ void timer(int una_vars){
     int i = 0;
     for(std::vector<Duck>::iterator it = ducks.begin(); it != ducks.end(); ++it, i++ ) {
         it->moveY(level);
-        it->moveX(i, level.blocks);
+        it->moveX(level);
     }
 
     glutPostRedisplay();
