@@ -17,7 +17,9 @@
 #include <GL/glut.h>
 #endif
 
+#include <fstream>
 #include <iostream>
+#include <vector>
 
 class Screen {
     
@@ -28,7 +30,7 @@ public :
     ~Screen(void);
     
     void DrawStartScreen(void);
-    void DrawScores(void);
+    void DrawScores(std::vector<std::string>);
     void DrawCredits(void);
     void DrawGameOver(void);
     

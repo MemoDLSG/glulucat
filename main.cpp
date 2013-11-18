@@ -15,6 +15,7 @@
 #endif
 
 #include <iostream>
+#include <fstream>
 #include "Glulucat.h"
 #include "Block.h"
 #include "Level.h"
@@ -27,15 +28,26 @@ Glulucat glulucat;
 Level level;
 Screen screen;
 std::vector<Duck> ducks;
+std::vector<string> scores;
 string currentLevel;
 
 bool pause;
 
 enum e_states { START, CREDITS, PLAYING, SCORES, GAMEOVER } state;
 
-/*
-* Limpia el fondo
-*/
+std::vector<string> readScores() {
+    std::vector<string> lines;
+    std::ifstream text_lines("scores.txt");
+    
+    if(text_lines.is_open()){
+        std::string line;
+        while(getline(text_lines, line) ){
+            lines.push_back(line);
+        }
+    }
+    return lines;
+}
+
 void startDefault(){
     for(int i = 0; i < 3; i++) {
         Duck duck = Duck(150, GLULUCAT_BLOCK_SIZE*(i+1.5));
@@ -87,6 +99,9 @@ void startLevel(string file){
     }
 }
 
+/*
+ * Limpia el fondo e inicializa lo necesario
+ */
 void init(void) {
     glClearColor (0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
@@ -94,9 +109,10 @@ void init(void) {
     pause = false;
     state = START;
     
+    scores = readScores();
+    
     screen = Screen();
     startLevel(currentLevel);
-
 }
 
 void timer(int una_vars) {
@@ -150,7 +166,7 @@ void display(void) {
             break;
             
         case SCORES:
-            screen.DrawScores();
+            screen.DrawScores(scores);
             break;
             
         case GAMEOVER:
@@ -187,22 +203,27 @@ void processMenu(int option){
     std::cout << option << std::endl;
     switch (option) {
         case 0:
-            pause = !pause;
+            if(state == PLAYING) pause = !pause;
+            else pause = false;
             break;
         case 1: case 2:
             state = PLAYING;
             break;
         case 100:
             state = START;
+            pause = false;
             break;
         case 101:
             state = CREDITS;
+            pause = false;
             break;
         case 102:
             state = SCORES;
+            pause = false;
             break;
         case 103:
             state = GAMEOVER;
+            pause = false;
             break;
 
         default:
@@ -262,14 +283,31 @@ void keyboard (unsigned char key, int x, int y) {
 
                 break;
                 
+            case 'M': case 'm':
+                if (state == GAMEOVER) {
+                    state = START;
+                    glulucat.lives = 3;
+                }
+                break;
+                
             case 'N': case 'n':
-                if (state == START || state == GAMEOVER) {
+                if (state == START) {
                     state = PLAYING;
                     glulucat.lives = 3;
                     startLevel(currentLevel);
                 }
                 break;
-                
+            case 'C': case 'c':
+                if (state != GAMEOVER && state != PLAYING
+                    && state != SCORES) {
+                    state = CREDITS;
+                }
+                break;
+            case 'P': case 'p':
+                if (state == START) {
+                    state = SCORES;
+                }
+                break;
 
             case 27:
                 exit(0);
