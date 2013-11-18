@@ -20,8 +20,11 @@ class Duck: public Character {
 
 public:
     Duck();
+    Duck(int, int);
+    int name;
     bool facing_right;
     void displayCharacter();
+    void bumpDucks(vector<Duck>);
 
 };
 
