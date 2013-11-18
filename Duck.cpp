@@ -30,6 +30,8 @@ void Duck::displayCharacter(void) {
 
 int Duck::moveX(int x, std::vector<Block> blocks){
     this -> x += x_speed;
+
+
     bool touchingOnY;
     int blockUpperEdge, blockLowerEdge, characterUpperEdge, characterLowerEdge;
     int blockLeftEdge, blockRightEdge, characterLeftEdge, characterRightEdge;

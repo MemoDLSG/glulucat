@@ -19,6 +19,7 @@
 #include "Block.h"
 #include "Level.h"
 #include "Duck.h"
+#include "YarnBall.h"
 
 
 Glulucat glulucat;
@@ -35,19 +36,19 @@ void init(void) {
 
     glulucat = Glulucat();
 
-    for(int i = 0; i < 5; i++) {
+    /*for(int i = 0; i < 5; i++) {
         Duck duck = Duck();
         ducks.push_back(duck);
-    }
+    }*/
 
 }
 
 void timer(int una_vars){
 
-    glulucat.moveY(level.blocks);
+    glulucat.moveY(level);
     int i = 0;
     for(std::vector<Duck>::iterator it = ducks.begin(); it != ducks.end(); ++it, i++ ) {
-        it->moveY(level.blocks);
+        it->moveY(level);
         it->moveX(i, level.blocks);
     }
 
@@ -84,12 +85,14 @@ void reshape (int w, int h) {
 void keyboard (unsigned char key, int x, int y) {
     switch (key) {
         case 'A': case 'a':
-            glulucat.moveX(-10, level.blocks);
+            glulucat.x_speed = -10;
+            glulucat.moveX(level);
 
             break;
 
         case 'D': case 'd':
-            glulucat.moveX(10, level.blocks);
+            glulucat.x_speed = 10;
+            glulucat.moveX(level);
 
             break;
 

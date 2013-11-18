@@ -13,7 +13,6 @@ Glulucat::Glulucat(){
     x = 425;
     y = 500;
     z = 0;
-
     y_speed = 0;
 }
 

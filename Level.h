@@ -8,6 +8,7 @@
 //
 
 #include "Block.h"
+#include "YarnBall.h"
 
 #ifndef __Glulucat__Level__
 #define __Glulucat__Level__
@@ -21,6 +22,10 @@
 
 #include <iostream>
 #include <vector>
+
+#define GLULUCAT_NOTHING 0
+#define GLULUCAT_BLOCK 1
+#define GLULUCAT_YARNBALL 2
 
 
 class Level {
@@ -36,7 +41,11 @@ public:
     Level(int, int, std::vector<Block>);
     void AddBlock(Block);
     void DrawLevel();
+    void DrawBlock(int, int);
+    void DrawYarnBall(int, int);
     std::vector<Block> blocks;
+    std::vector<YarnBall> yarnballs;
+    int levelMap[160][120];
 };
 
 #endif /* defined(__Glulucat__Level__) */
