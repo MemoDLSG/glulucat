@@ -14,6 +14,7 @@
 #include <GL/glut.h>
 #endif
 
+#include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include "Glulucat.h"
@@ -22,6 +23,8 @@
 #include "Duck.h"
 #include "YarnBall.h"
 #include "Screen.h"
+#include "Sound.hpp"
+
 
 
 Glulucat glulucat;
@@ -31,9 +34,23 @@ std::vector<Duck> ducks;
 std::vector<string> scores;
 string currentLevel;
 
-bool pause;
+bool game_pause;
 
 enum e_states { START, CREDITS, PLAYING, SCORES, GAMEOVER } state;
+
+void playSound(){
+    Sound::initialise();
+    Sound::load("jaguar.wav");
+    Sound::play();
+}
+
+void stopSound(){
+    
+    //Sound::setPause(true);
+    
+}
+
+
 
 std::vector<string> readScores() {
     std::vector<string> lines;
@@ -106,13 +123,14 @@ void init(void) {
     glClearColor (0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
     currentLevel = "level1.txt";
-    pause = false;
+    game_pause = false;
     state = START;
     
     scores = readScores();
     
     screen = Screen();
     startLevel(currentLevel);
+    
 }
 
 void timer(int una_vars) {
@@ -120,7 +138,9 @@ void timer(int una_vars) {
     if(glulucat.dead){
         while (!ducks.empty()){
             ducks.pop_back();
+            
         }
+        playSound();
         startLevel(currentLevel);
     }
     
@@ -128,10 +148,9 @@ void timer(int una_vars) {
         state = GAMEOVER;
     }
 
-    if(!pause && state == PLAYING) {
+    if(!game_pause && state == PLAYING) {
     	glulucat.moveY(level.levelMap);
     	glulucat.collectYarn(level);
-
     	for(int i=0; i<ducks.size(); i++){
         	Duck thisDuck = ducks.at(i);
         	thisDuck.moveY(level.levelMap);
@@ -203,27 +222,27 @@ void processMenu(int option){
     std::cout << option << std::endl;
     switch (option) {
         case 0:
-            if(state == PLAYING) pause = !pause;
-            else pause = false;
+            if(state == PLAYING) game_pause = !game_pause;
+            else game_pause = false;
             break;
         case 1: case 2:
             state = PLAYING;
             break;
         case 100:
             state = START;
-            pause = false;
+            game_pause = false;
             break;
         case 101:
             state = CREDITS;
-            pause = false;
+            game_pause = false;
             break;
         case 102:
             state = SCORES;
-            pause = false;
+            game_pause = false;
             break;
         case 103:
             state = GAMEOVER;
-            pause = false;
+            game_pause = false;
             break;
 
         default:
@@ -255,7 +274,7 @@ void createMenu (void){
 }
 
 void keyboard (unsigned char key, int x, int y) {
-    if(!pause) {
+    if(!game_pause) {
         switch (key) {
 	        case 'A': case 'a':
     	        glulucat.x_speed = -10;
