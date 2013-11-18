@@ -38,7 +38,7 @@ Thumbs.db
 
 # Remove XCode Files #
 ######################
-.Glulucat.1
+Glulucat.1
 
 # Remove CddeBlocks Files #
 ###########################
@@ -47,3 +47,6 @@ Glulucat.cbp
 Glulucat.depend
 Glulucat.layout
 
+# Remove other files #
+######################
+git_to_xcode.sh
