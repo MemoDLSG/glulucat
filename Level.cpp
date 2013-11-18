@@ -78,11 +78,15 @@ Level::Level(int pwidth, int pheight){
 Level::Level(int pwidth, int pheight, std::vector<Block> pblocks ){
     width = pwidth;
     height = pheight;
-    blocks = pblocks;
+    //blocks = pblocks;
 }
 
 void Level::AddBlock(Block block){
-    blocks.push_back(block);
+    //blocks.push_back(block);
+}
+
+void Level::UpdateCell(int i, int j, int val){
+    levelMap[i][j] = val;
 }
 
 void Level::DrawLevel(){
@@ -95,12 +99,14 @@ void Level::DrawLevel(){
 
     for(int i=0; i<width; i++){
         for(int j=0; j<height; j++){
+            //cout << levelMap[i][j];
             if(levelMap[i][j] == GLULUCAT_BLOCK){
                 DrawBlock(i,j);
-            }else if(levelMap[i][j] == GLULUCAT_YARNBALL){
-                DrawYarnBall(i,j);
+            }else if(levelMap[i][j] == GLULUCAT_YARN){
+                DrawYarn(i,j);
             }
         }
+        //cout << endl;
     }
 }
 
@@ -115,7 +121,7 @@ void Level::DrawBlock(int i, int j){
     glPopMatrix();
 }
 
-void Level::DrawYarnBall(int i, int j){
+void Level::DrawYarn(int i, int j){
     int x = (i+0.5)*GLULUCAT_BLOCK_SIZE;
     int y = (j+0.5)*GLULUCAT_BLOCK_SIZE;
     glLoadIdentity();

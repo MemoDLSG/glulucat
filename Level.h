@@ -27,29 +27,25 @@
 
 #define GLULUCAT_NOTHING 0
 #define GLULUCAT_BLOCK 1
-#define GLULUCAT_YARNBALL 2
+#define GLULUCAT_YARN 2
 
 using namespace std;
 
 
 class Level {
-
+public:
     int width;
     int height;
-
-
-public:
     Level();
     //~Level();
     Level(int, int);
     Level(int, int, std::vector<Block>);
     void AddBlock(Block);
     void DrawLevel();
+    void UpdateCell(int, int, int);
     void DrawBlock(int, int);
-    void DrawYarnBall(int, int);
-    std::vector<Block> blocks;
-    std::vector<YarnBall> yarnballs;
-    int levelMap[160][120];
+    void DrawYarn(int, int);
+    int levelMap[16][12];
 };
 
 #endif /* defined(__Glulucat__Level__) */

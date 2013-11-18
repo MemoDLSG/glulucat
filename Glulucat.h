@@ -13,18 +13,21 @@
 
 #include <iostream>
 
+#define GLULUCAT_YARN_SCORE 100
+
 
 class Glulucat: public Character {
-    
-    
+
+
 public:
     int lives;
     int score;
-    
+
     Glulucat(void);
     void displayCharacter(void);
     void displayMetadata(void);
-    
+    void collectYarn(Level&);
+
 };
 
 #endif /* defined(__Glulucat__Glulucat__) */

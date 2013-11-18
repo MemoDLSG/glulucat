@@ -36,7 +36,7 @@ enum current_screen { START, CREDITS, PLAYING } screen;
 void init(void) {
     glClearColor (0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
-    
+
     pause = false;
 
     for(int i = 0; i < 3; i++) {
@@ -53,7 +53,17 @@ void timer(int una_vars) {
 
     if(!pause) {
     	glulucat.moveY(level);
-    	
+    	glulucat.collectYarn(level);
+    	/*
+        cout << "Fuera de collectYarn, despues del chequeo" << endl;
+        for(int j=(level.height-1); j>=0; j--){
+                for(int i=0; i<level.width; i++){
+                    cout << level.levelMap[i][j];
+                }
+                cout << endl;
+            }
+        cout << endl;
+        */
     	for(int i=0; i<ducks.size(); i++){
         	Duck thisDuck = ducks.at(i);
         	thisDuck.moveY(level);
@@ -64,7 +74,7 @@ void timer(int una_vars) {
     	}
 	}
     glutPostRedisplay();
-    
+
     glutTimerFunc(25,timer,0);
 }
 
@@ -96,7 +106,7 @@ void reshape (int w, int h) {
 void processMenu(int option){
     switch (option) {
         case 1:
-            
+
             break;
         case 99:
             pause = !pause;
@@ -108,23 +118,23 @@ void processMenu(int option){
 
 void createMenu (void){
     int mainMenu, levels, others;
-    
+
     levels = glutCreateMenu(processMenu);
     glutAddMenuEntry("Level 1", 1);
     glutAddMenuEntry("Level 2", 2);
-    
+
     others = glutCreateMenu(processMenu);
     glutAddMenuEntry("Opcion randy", 3);
     glutAddMenuEntry("Locura!", 4);
-    
+
     mainMenu = glutCreateMenu(processMenu);
     glutAddSubMenu("Niveles", levels);
     glutAddMenuEntry("Pausa", 99);
     glutAddSubMenu("Otros", others);
-    
+
     // Let the menu respond on the right mouse button
     glutAttachMenu(GLUT_RIGHT_BUTTON);
-    
+
 }
 
 void keyboard (unsigned char key, int x, int y) {
