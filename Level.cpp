@@ -54,10 +54,18 @@ void Level::DrawLevel(){
     for(int i=0; i<width; i++){
         for(int j=0; j<height; j++){
             //cout << levelMap[i][j];
-            if(levelMap[i][j] == GLULUCAT_BLOCK){
-                DrawBlock(i,j);
-            }else if(levelMap[i][j] == GLULUCAT_YARN){
-                DrawYarn(i,j);
+            switch (levelMap[i][j]){
+                case GLULUCAT_BLOCK:
+                    DrawBlock(i,j);
+                    break;
+                case GLULUCAT_YARN:
+                    DrawYarn(i,j);
+                    break;
+                case GLULUCAT_CAMERA:
+                    DrawCamera(i,j);
+                    break;
+                default:
+                    break;
             }
         }
         //cout << endl;
@@ -83,5 +91,16 @@ void Level::DrawYarn(int i, int j){
     glColor3f(1.0, 1.0, 1.0); //color provisiorio mientras se ponen texturas
     glTranslatef(x, y, 0);
     glutSolidCube(GLULUCAT_BLOCK_SIZE/2);
+    glPopMatrix();
+}
+
+void Level::DrawCamera(int i, int j){
+    int x = (i+0.5)*GLULUCAT_BLOCK_SIZE;
+    int y = (j+0.5)*GLULUCAT_BLOCK_SIZE;
+    glLoadIdentity();
+    glPushMatrix();
+    glColor3f(0.0, 0.0, 1.0); //color provisiorio mientras se ponen texturas
+    glTranslatef(x, y, 0);
+    glutSolidCube(GLULUCAT_BLOCK_SIZE*0.67);
     glPopMatrix();
 }

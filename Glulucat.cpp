@@ -20,6 +20,8 @@ Glulucat::Glulucat(void){
     lives = 3;
     score = 0;
     this -> dead = false;
+    this -> hasCamera = false;
+    this -> flicking = 0;
 }
 
 Glulucat::Glulucat(int x, int y){
@@ -31,6 +33,8 @@ Glulucat::Glulucat(int x, int y){
     lives = 3;
     score = 0;
     this -> dead = false;
+    this -> hasCamera = false;
+    this -> flicking = 0;
 }
 
 Glulucat::Glulucat(int x, int y, int lives){
@@ -42,6 +46,8 @@ Glulucat::Glulucat(int x, int y, int lives){
     score = 0;
     this -> lives = lives;
     this -> dead = false;
+    this -> hasCamera = false;
+    this -> flicking = 0;
 }
 
 void print_bitmap_string(void* font, const char* s) {
@@ -56,11 +62,19 @@ void print_bitmap_string(void* font, const char* s) {
 void Glulucat::displayCharacter(void) {
     glPushMatrix();
     glLoadIdentity();
-    glColor3f(1.0, 1.0, 1.0);
     glTranslatef(x, y, z);
-    glutWireCube(50.0);
+    if(hasCamera){
+        glColor3f(0.0, 0.0, 1.0);
+        glutSolidCube(50.0);
+    }else{
+        if(flicking%2 == 0){
+            glColor3f(1.0, 1.0, 1.0);
+        }else{
+            glColor3f(0.0, 0.0, 1.0);
+        }
+        glutWireCube(50.0);
+    }
     glPopMatrix();
-    ;
 }
 
 void Glulucat::displayMetadata(void){
@@ -92,21 +106,40 @@ void Glulucat::collectYarn(Level& level){
         //level.levelMap[left][down] = GLULUCAT_NOTHING;
         level.UpdateCell(left, down, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+    }else if(level.levelMap[left][down] == GLULUCAT_CAMERA){
+        hasCamera = true;
+        level.UpdateCell(left, down, GLULUCAT_NOTHING);
+        score += GLULUCAT_CAMERA_SCORE;
     }
+
     if(level.levelMap[right][down] == GLULUCAT_YARN){
         //level.levelMap[right][down] = GLULUCAT_NOTHING;
         level.UpdateCell(right, down, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+    }else if(level.levelMap[right][down] == GLULUCAT_CAMERA){
+        hasCamera = true;
+        level.UpdateCell(right, down, GLULUCAT_NOTHING);
+        score += GLULUCAT_CAMERA_SCORE;
     }
+
     if(level.levelMap[left][up] == GLULUCAT_YARN){
         //level.levelMap[left][up] = GLULUCAT_NOTHING;
         level.UpdateCell(left, up, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+    }else if(level.levelMap[left][up] == GLULUCAT_CAMERA){
+        hasCamera = true;
+        level.UpdateCell(left, up, GLULUCAT_NOTHING);
+        score += GLULUCAT_CAMERA_SCORE;
     }
+
     if(level.levelMap[right][up] == GLULUCAT_YARN){
         //level.levelMap[right][up] = GLULUCAT_NOTHING;
         level.UpdateCell(right, up, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+    }else if(level.levelMap[right][up] == GLULUCAT_CAMERA){
+        hasCamera = true;
+        level.UpdateCell(right, up, GLULUCAT_NOTHING);
+        score += GLULUCAT_CAMERA_SCORE;
     }
 }
 
@@ -117,22 +150,37 @@ void Glulucat::die(){
 }
 
 void Glulucat::bumpedLeft(vector<Duck>& ducks, vector<Duck>::iterator it){
-    die();
+    if(hasCamera){
+        hasCamera = false;
+        flicking = 50;
+    }else{
+        die();
+    }
 }
 
 void Glulucat::bumpedRight(vector<Duck>& ducks, vector<Duck>::iterator it){
-    die();
+    if(hasCamera){
+        hasCamera = false;
+        flicking = 50;
+    }else{
+        die();
+    }
 }
 
 void Glulucat::bumpedDown(vector<Duck>& ducks, vector<Duck>::iterator it){
     ducks.erase(it);
-    this -> score += 200;
+    this -> score += GLULUCAT_DUCK_SCORE;
     this -> on_air = false;
     startJumping();
 }
 
 void Glulucat::bumpedUp(vector<Duck>& ducks, vector<Duck>::iterator it){
-    die();
+    if(hasCamera){
+        hasCamera = false;
+        flicking = 50;
+    }else{
+        die();
+    }
 }
 
 void Glulucat::bumpDucks(vector<Duck>& ducks) {

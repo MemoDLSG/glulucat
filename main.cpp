@@ -112,7 +112,11 @@ void timer(int una_vars) {
    	    	thisDuck.bumpDucks(ducks);
     	    ducks.insert(ducks.begin()+i, thisDuck);
     	}
-    	glulucat.bumpDucks(ducks);
+    	if(glulucat.flicking > 0){
+            glulucat.flicking--;
+    	}else{
+            glulucat.bumpDucks(ducks);
+    	}
 	}
     glutPostRedisplay();
 
