@@ -31,6 +31,9 @@ Glulucat::Glulucat(int x, int y){
     lives = 3;
     score = 0;
     this -> dead = false;
+    this -> hasCamera = false;
+    this -> flicking = 0;
+
 }
 
 Glulucat::Glulucat(int x, int y, int lives){
@@ -92,21 +95,46 @@ void Glulucat::collectYarn(Level& level){
         //level.levelMap[left][down] = GLULUCAT_NOTHING;
         level.UpdateCell(left, down, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+        level.yarnBalls--;
+        //cout << level.yarnBalls << endl;
+    }else if(level.levelMap[left][down] == GLULUCAT_CAMERA){
+        hasCamera = true;
+        level.UpdateCell(left, down, GLULUCAT_NOTHING);
+        score += GLULUCAT_CAMERA_SCORE;
     }
     if(level.levelMap[right][down] == GLULUCAT_YARN){
         //level.levelMap[right][down] = GLULUCAT_NOTHING;
         level.UpdateCell(right, down, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+        level.yarnBalls--;
+        //cout << level.yarnBalls << endl;
+    }else if(level.levelMap[right][down] == GLULUCAT_CAMERA){
+        hasCamera = true;
+        level.UpdateCell(right, down, GLULUCAT_NOTHING);
+        score += GLULUCAT_CAMERA_SCORE;
     }
-    if(level.levelMap[left][up] == GLULUCAT_YARN){
+    
+	if(level.levelMap[left][up] == GLULUCAT_YARN){
         //level.levelMap[left][up] = GLULUCAT_NOTHING;
         level.UpdateCell(left, up, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+        level.yarnBalls--;
+        //cout << level.yarnBalls << endl;
+    }else if(level.levelMap[left][up] == GLULUCAT_CAMERA){
+        hasCamera = true;
+        level.UpdateCell(left, up, GLULUCAT_NOTHING);
+        score += GLULUCAT_CAMERA_SCORE;
     }
     if(level.levelMap[right][up] == GLULUCAT_YARN){
         //level.levelMap[right][up] = GLULUCAT_NOTHING;
         level.UpdateCell(right, up, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+        level.yarnBalls--;
+        //cout << level.yarnBalls << endl;
+    }else if(level.levelMap[right][up] == GLULUCAT_CAMERA){
+        hasCamera = true;
+        level.UpdateCell(right, up, GLULUCAT_NOTHING);
+        score += GLULUCAT_CAMERA_SCORE;
     }
 }
 
