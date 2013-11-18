@@ -15,29 +15,45 @@
 #endif
 
 #include <iostream>
+#include <fstream>
 #include "Glulucat.h"
 #include "Block.h"
 #include "Level.h"
 #include "Duck.h"
 #include "YarnBall.h"
-#include "StartScreen.h"
+#include "Screen.h"
+#include "Materials.h"
 
 
 Glulucat glulucat;
 Level level;
-StartScreen start_screen;
+Screen screen;
 std::vector<Duck> ducks;
+std::vector<string> scores;
 string currentLevel;
+Materials materials;
 
 bool pause;
 
-enum current_screen { START, CREDITS, PLAYING, SCORES, GAMEOVER } screen;
+enum e_states { START, CREDITS, PLAYING, SCORES, GAMEOVER } state;
 
-/*
-* Limpia el fondo
-*/
+std::vector<string> readScores() {
+    std::vector<string> lines;
+    std::ifstream text_lines("scores.txt");
+
+    if(text_lines.is_open()){
+        std::string line;
+        while(getline(text_lines, line) ){
+            lines.push_back(line);
+        }
+    }
+    return lines;
+}
 
 void startDefault(){
+    while (!ducks.empty()){
+        ducks.pop_back();
+    }
     for(int i = 0; i < 3; i++) {
         Duck duck = Duck(150, GLULUCAT_BLOCK_SIZE*(i+1.5));
         duck.name = i;
@@ -49,8 +65,11 @@ void startDefault(){
 void startLevel(string file){
     ifstream layout (file.c_str());
     string line;
-    int x, y, i = 0;
+    int x, y;
     Duck duck;
+    while (!ducks.empty()){
+        ducks.pop_back();
+    }
     if (layout.is_open()){
         getline(layout, line);
         level.width = atoi(line.c_str());
@@ -88,28 +107,33 @@ void startLevel(string file){
     }
 }
 
+/*
+ * Limpia el fondo e inicializa lo necesario
+ */
 void init(void) {
     glClearColor (0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
-    currentLevel = "C:\\Users\\Memo\\Documents\\GitHub\\glulucat\\level1.txt";
+    currentLevel = "level1.txt";
     pause = false;
-    screen = START;
-    
-    start_screen = StartScreen();
-    startLevel(currentLevel);
+    state = START;
 
+    scores = readScores();
+
+    screen = Screen();
+    startLevel(currentLevel);
 }
 
 void timer(int una_vars) {
 
     if(glulucat.dead){
-        while (!ducks.empty()){
-            ducks.pop_back();
-        }
         startLevel(currentLevel);
     }
 
-    if(!pause && screen == PLAYING) {
+    if(glulucat.lives < 1) {
+        state = GAMEOVER;
+    }
+
+    if(!pause && state == PLAYING) {
     	glulucat.moveY(level.levelMap);
     	glulucat.collectYarn(level);
 
@@ -139,25 +163,25 @@ void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     gluLookAt (400, 300, 50, 400, 300, 0.0, 0.0, 1.0, 0.0);
-    
-    switch (screen) {
+
+    switch (state) {
         case START:
             //std::cout << "Start this $#¡+" << std::endl;
-            start_screen.DrawScreen();
+            screen.DrawStartScreen();
             break;
-            
+
         case CREDITS:
-            
+            screen.DrawCredits();
             break;
-            
+
         case SCORES:
-            
+            screen.DrawScores(scores);
             break;
-            
+
         case GAMEOVER:
-            
+            screen.DrawGameOver();
             break;
-            
+
         case PLAYING:
             level.DrawLevel();
             glulucat.displayCharacter();
@@ -166,11 +190,11 @@ void display(void) {
                 it->displayCharacter();
             }
             break;
-            
+
         default:
             break;
     }
-    
+
 
     glutSwapBuffers();
 
@@ -188,19 +212,27 @@ void processMenu(int option){
     std::cout << option << std::endl;
     switch (option) {
         case 0:
-            pause = !pause;
+            if(state == PLAYING) pause = !pause;
+            else pause = false;
             break;
         case 1: case 2:
-            screen = PLAYING;
+            state = PLAYING;
             break;
         case 100:
-            screen = START;
+            state = START;
+            pause = false;
             break;
         case 101:
-            screen = CREDITS;
+            state = CREDITS;
+            pause = false;
             break;
         case 102:
-            screen = SCORES;
+            state = SCORES;
+            pause = false;
+            break;
+        case 103:
+            state = GAMEOVER;
+            pause = false;
             break;
 
         default:
@@ -220,12 +252,12 @@ void createMenu (void){
     glutAddMenuEntry("Créditos", 101);
     glutAddMenuEntry("Puntajes", 102);
 
-    
+
     mainMenu = glutCreateMenu(processMenu);
     glutAddSubMenu("Niveles", levels);
     glutAddMenuEntry("Pausa", 0);
     glutAddSubMenu("Ir a ", others);
-    
+
     // Let the menu respond on the right mouse button
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 
@@ -250,13 +282,39 @@ void keyboard (unsigned char key, int x, int y) {
                 break;
 
             case 'S': case 's':
-                glulucat.isOnAir(false);
+                if (state == PLAYING) {
+                    glulucat.isOnAir(false);
+                } else if (state == GAMEOVER) {
+                    exit(0);
+                } else if (state == SCORES || state == CREDITS) {
+                    state = START;
+                }
 
                 break;
-                
+
+            case 'M': case 'm':
+                if (state == GAMEOVER) {
+                    state = START;
+                    glulucat.lives = 3;
+                }
+                break;
+
             case 'N': case 'n':
-                if (screen == START || screen == GAMEOVER) {
-                    screen = PLAYING;
+                if (state == START) {
+                    state = PLAYING;
+                    glulucat.lives = 3;
+                    startLevel(currentLevel);
+                }
+                break;
+            case 'C': case 'c':
+                if (state != GAMEOVER && state != PLAYING
+                    && state != SCORES) {
+                    state = CREDITS;
+                }
+                break;
+            case 'P': case 'p':
+                if (state == START) {
+                    state = SCORES;
                 }
                 break;
 

@@ -35,6 +35,7 @@ Glulucat::Glulucat(int x, int y){
     this -> dead = false;
     this -> hasCamera = false;
     this -> flicking = 0;
+
 }
 
 Glulucat::Glulucat(int x, int y, int lives){

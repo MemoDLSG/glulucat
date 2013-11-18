@@ -53,7 +53,6 @@ void Level::DrawLevel(){
 
     for(int i=0; i<width; i++){
         for(int j=0; j<height; j++){
-            //cout << levelMap[i][j];
             switch (levelMap[i][j]){
                 case GLULUCAT_BLOCK:
                     DrawBlock(i,j);

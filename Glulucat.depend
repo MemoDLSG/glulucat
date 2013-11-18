@@ -13,11 +13,11 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1384768399 source:c:\users\memo\documents\github\glulucat\character.cpp
+1384786495 source:c:\users\memo\documents\github\glulucat\character.cpp
 	"Character.h"
 	<iostream>
 
-1384768386 c:\users\memo\documents\github\glulucat\character.h
+1384787044 c:\users\memo\documents\github\glulucat\character.h
 	<GLUT/glut.h>
 	<windows.h>
 	<GL/glut.h>
@@ -33,29 +33,32 @@
 	"Block.h"
 	<iostream>
 
-1384768750 source:c:\users\memo\documents\github\glulucat\glulucat.cpp
+1384787052 source:c:\users\memo\documents\github\glulucat\glulucat.cpp
 	"Glulucat.h"
 	<sstream>
 	"string.h"
 
-1384768391 c:\users\memo\documents\github\glulucat\glulucat.h
+1384787072 c:\users\memo\documents\github\glulucat\glulucat.h
 	"Character.h"
 	<iostream>
 	"Duck.h"
 	"Level.h"
 
-1384768594 source:c:\users\memo\documents\github\glulucat\main.cpp
+1384787222 source:c:\users\memo\documents\github\glulucat\main.cpp
 	<GLUT/glut.h>
 	<windows.h>
 	<GL/glut.h>
 	<iostream>
+	<fstream>
 	"Glulucat.h"
 	"Block.h"
 	"Level.h"
 	"Duck.h"
 	"YarnBall.h"
+	"Screen.h"
+	"Materials.h"
 
-1384767016 c:\users\memo\documents\github\glulucat\level.h
+1384787026 c:\users\memo\documents\github\glulucat\level.h
 	<GLUT/glut.h>
 	<windows.h>
 	<GL/glut.h>
@@ -64,7 +67,7 @@
 	<string>
 	<vector>
 
-1384767164 source:c:\users\memo\documents\github\glulucat\level.cpp
+1384786989 source:c:\users\memo\documents\github\glulucat\level.cpp
 	"Level.h"
 	"Glulucat.h"
 	"Duck.h"
@@ -77,4 +80,36 @@
 1384725736 source:c:\users\memo\documents\github\glulucat\yarnball.cpp
 	"YarnBall.h"
 	<iostream>
+
+1384769409 c:\users\memo\documents\github\glulucat\startscreen.h
+	<GLUT/glut.h>
+	<windows.h>
+	<GL/glut.h>
+	<iostream>
+
+1384769801 source:c:\users\memo\documents\github\glulucat\startscreen.cpp
+	"StartScreen.h"
+	<sstream>
+	<string>
+
+1384783865 c:\users\memo\documents\github\glulucat\screen.h
+	<GLUT/glut.h>
+	<windows.h>
+	<GL/glut.h>
+	<fstream>
+	<iostream>
+	<vector>
+
+1384784851 source:c:\users\memo\documents\github\glulucat\screen.cpp
+	"Screen.h"
+	<iostream>
+	<fstream>
+
+1384785938 c:\users\memo\documents\github\glulucat\materials.h
+	<GLUT/glut.h>
+	<windows.h>
+	<GL/glut.h>
+
+1384785975 source:c:\users\memo\documents\github\glulucat\materials.cpp
+	"Materials.h"
 

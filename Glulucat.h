@@ -16,9 +16,8 @@
 #include "Level.h"
 
 #define GLULUCAT_YARN_SCORE 100
-#define GLULUCAT_CAMERA_SCORE 500
 #define GLULUCAT_DUCK_SCORE 200
-
+#define GLULUCAT_CAMERA_SCORE 500
 
 class Glulucat: public Character {
 
@@ -27,8 +26,8 @@ public:
     int lives;
     int score;
     bool dead;
-    bool hasCamera;
     int flicking;
+    bool hasCamera;
 
     Glulucat(void);
     Glulucat(int, int);
