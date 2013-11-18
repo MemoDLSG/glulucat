@@ -19,6 +19,29 @@ Glulucat::Glulucat(void){
     y_speed = 0;
     lives = 3;
     score = 0;
+    this -> dead = false;
+}
+
+Glulucat::Glulucat(int x, int y){
+    this->x = x;
+    this->y = y;
+    z = 0;
+
+    y_speed = 0;
+    lives = 3;
+    score = 0;
+    this -> dead = false;
+}
+
+Glulucat::Glulucat(int x, int y, int lives){
+    this->x = x;
+    this->y = y;
+    z = 0;
+
+    y_speed = 0;
+    score = 0;
+    this -> lives = lives;
+    this -> dead = false;
 }
 
 void print_bitmap_string(void* font, const char* s) {
@@ -84,6 +107,75 @@ void Glulucat::collectYarn(Level& level){
         //level.levelMap[right][up] = GLULUCAT_NOTHING;
         level.UpdateCell(right, up, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
+    }
+}
+
+void Glulucat::die(){
+    this -> lives--;
+    this -> score = 0;
+    this -> dead = true;
+}
+
+void Glulucat::bumpedLeft(vector<Duck>& ducks, vector<Duck>::iterator it){
+    die();
+}
+
+void Glulucat::bumpedRight(vector<Duck>& ducks, vector<Duck>::iterator it){
+    die();
+}
+
+void Glulucat::bumpedDown(vector<Duck>& ducks, vector<Duck>::iterator it){
+    ducks.erase(it);
+    this -> score += 200;
+    this -> on_air = false;
+    startJumping();
+}
+
+void Glulucat::bumpedUp(vector<Duck>& ducks, vector<Duck>::iterator it){
+    die();
+}
+
+void Glulucat::bumpDucks(vector<Duck>& ducks) {
+    bool touchingOnYDown, touchingOnYUp, touchingOnXLeft, touchingOnXRight;
+    int duckUpperEdge, duckLowerEdge, characterUpperEdge, characterLowerEdge;
+    int duckLeftEdge, duckRightEdge, characterLeftEdge, characterRightEdge;
+
+    for (std::vector<Duck>::iterator it = ducks.begin() ; it != ducks.end(); ++it){
+        duckUpperEdge = it->y + GLULUCAT_BLOCK_SIZE/2;
+        duckLowerEdge = it->y - GLULUCAT_BLOCK_SIZE/2;
+        characterUpperEdge = this->y + GLULUCAT_BLOCK_SIZE/2;
+        characterLowerEdge = this->y - GLULUCAT_BLOCK_SIZE/2;
+
+        duckLeftEdge = it->x - GLULUCAT_BLOCK_SIZE/2;
+        duckRightEdge = it->x + GLULUCAT_BLOCK_SIZE/2;
+        characterLeftEdge = this -> x - GLULUCAT_BLOCK_SIZE/2;
+        characterRightEdge = this -> x + GLULUCAT_BLOCK_SIZE/2;
+
+        touchingOnYDown = (characterLowerEdge <= duckUpperEdge && characterLowerEdge >= duckLowerEdge);
+        touchingOnYUp = (characterUpperEdge >= duckLowerEdge && characterUpperEdge <= duckUpperEdge);
+        touchingOnXLeft = (characterLeftEdge < duckRightEdge && characterLeftEdge >= duckLeftEdge);
+        touchingOnXRight = (characterRightEdge > duckLeftEdge && characterRightEdge <= duckRightEdge);
+
+        if(touchingOnXLeft || touchingOnXRight){
+            if(characterUpperEdge == duckUpperEdge){
+                if(touchingOnXLeft){
+                    bumpedLeft(ducks, it);
+                }else{ //touchingOnXRight;
+                    bumpedRight(ducks, it);
+                }
+                break;
+            }
+
+            if(touchingOnYDown){
+                bumpedDown(ducks, it);
+                break;
+            }
+
+            if(touchingOnYUp){
+                bumpedUp(ducks, it);
+                break;
+            }
+        }
     }
 }
 

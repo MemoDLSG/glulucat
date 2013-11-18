@@ -36,7 +36,25 @@ void Duck::displayCharacter(void) {
     glPopMatrix();
 }
 
-void Duck::bumpDucks(vector<Duck> ducks) {
+void Duck::bumpedLeft(vector<Duck>& ducks, vector<Duck>::iterator it){
+    this -> x_speed *= -1;
+    this -> x = it->x + GLULUCAT_BLOCK_SIZE;
+}
+
+void Duck::bumpedRight(vector<Duck>& ducks, vector<Duck>::iterator it){
+    this -> x_speed *= -1;
+    this -> x = it->x - GLULUCAT_BLOCK_SIZE;
+}
+
+void Duck::bumpedDown(vector<Duck>& ducks, vector<Duck>::iterator it){
+    this -> y = it->y + GLULUCAT_BLOCK_SIZE;
+}
+
+void Duck::bumpedUp(vector<Duck>& ducks, vector<Duck>::iterator it){
+    this -> y = it->y - GLULUCAT_BLOCK_SIZE;
+}
+
+void Duck::bumpDucks(vector<Duck>& ducks) {
     bool touchingOnYDown, touchingOnYUp, touchingOnXLeft, touchingOnXRight;
     int duckUpperEdge, duckLowerEdge, characterUpperEdge, characterLowerEdge;
     int duckLeftEdge, duckRightEdge, characterLeftEdge, characterRightEdge;
@@ -59,22 +77,21 @@ void Duck::bumpDucks(vector<Duck> ducks) {
 
         if(touchingOnXLeft || touchingOnXRight){
             if(characterUpperEdge == duckUpperEdge){
-                this -> x_speed *= -1;
                 if(touchingOnXLeft){
-                    this -> x = it->x + GLULUCAT_BLOCK_SIZE;
+                    bumpedLeft(ducks, it);
                 }else{ //touchingOnXRight;
-                    this -> x = it->x - GLULUCAT_BLOCK_SIZE;
+                    bumpedRight(ducks, it);
                 }
                 break;
             }
 
             if(touchingOnYDown){
-                this -> y = it->y + GLULUCAT_BLOCK_SIZE;
+                bumpedDown(ducks, it);
                 break;
             }
 
             if(touchingOnYUp){
-                this -> y = it->y - GLULUCAT_BLOCK_SIZE;
+                bumpedUp(ducks, it);
                 break;
             }
         }

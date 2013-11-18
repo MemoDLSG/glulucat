@@ -20,7 +20,11 @@
 #include <vector>
 #include <tgmath.h>
 #include "Block.h"
-#include "Level.h"
+
+#define GLULUCAT_NOTHING 0
+#define GLULUCAT_BLOCK 1
+#define GLULUCAT_YARN 2
+//#include "Level.h"
 
 using namespace std;
 
@@ -40,10 +44,9 @@ public:
     bool isOnAir(bool);
     void startJumping();
     void jump(vector<Block>);
-    int moveY(Level);
-    int moveX(Level);
+    int moveY(int[][12]);
+    int moveX(int[][12]);
 
-protected:
     int x;
     int y;
     int z;

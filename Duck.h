@@ -24,7 +24,11 @@ public:
     int name;
     bool facing_right;
     void displayCharacter();
-    void bumpDucks(vector<Duck>);
+    void bumpDucks(vector<Duck>&);
+    void bumpedLeft(vector<Duck>&, vector<Duck>::iterator);
+    void bumpedRight(vector<Duck>&, vector<Duck>::iterator);
+    void bumpedDown(vector<Duck>&, vector<Duck>::iterator);
+    void bumpedUp(vector<Duck>&, vector<Duck>::iterator);
 
 };
 

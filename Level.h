@@ -7,9 +7,6 @@
 //  Copyright (c) 2013 Glulucat. All rights reserved.
 //
 
-#include "Block.h"
-#include "YarnBall.h"
-
 #ifndef __Glulucat__Level__
 #define __Glulucat__Level__
 
@@ -25,6 +22,11 @@
 #include <string>
 #include <vector>
 
+//class Glulucat;
+//class Duck;
+//#include "Glulucat.h"
+//#include "Duck.h"
+
 #define GLULUCAT_NOTHING 0
 #define GLULUCAT_BLOCK 1
 #define GLULUCAT_YARN 2
@@ -36,17 +38,19 @@ class Level {
 public:
     int width;
     int height;
+    int levelMap[16][12];
+    //Glulucat glulucat;
+    //vector<Duck> ducks;
+
     Level();
-    //~Level();
-    Level(int, int);
-    Level(int, int, std::vector<Block>);
-    void AddBlock(Block);
+    Level(string);
     void DrawLevel();
     void UpdateCell(int, int, int);
     void DrawBlock(int, int);
     void DrawYarn(int, int);
     void PrintLevel();
-    int levelMap[16][12];
+    void Start(string);
+    void StartDefault();
 };
 
 #endif /* defined(__Glulucat__Level__) */

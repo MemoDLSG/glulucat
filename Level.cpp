@@ -8,81 +8,25 @@
 //
 
 #include "Level.h"
+#include "Glulucat.h"
+#include "Duck.h"
 
-Level::Level(void){
+Level::Level(){}
+
+void Level::StartDefault(){
     width = 16;
     height = 12;
 
-    ifstream layout ("C:\\Users\\Memo\\Documents\\GitHub\\glulucat\\level1.txt");
-    string line;
-    int i = 0;
-    if (layout.is_open()){
-        getline(layout, line);
-        this -> width = atoi(line.c_str());
-
-        getline(layout, line);
-        this -> height = atoi(line.c_str());
-
-        for(int j=(height-1); j>=0; j--){
-            getline(layout, line);
-            for(int i=0; i<width; i++){
-                levelMap[i][j] = line.at(i) - '0';
-            }
-        }
-        layout.close();
-    }
-
-    else{
-        cout << "Unable to open file" << endl;
-        //RANDOM
-        for(int i=0; i<width; i++){
+    for(int i=0; i<width; i++){
             levelMap[i][0] = GLULUCAT_BLOCK;
-        }
-        levelMap[2][1] = GLULUCAT_BLOCK;
-        levelMap[13][1] = GLULUCAT_BLOCK;
-
-
-        for(int i=5; i<width-5; i++){
-            levelMap[i][3] = GLULUCAT_BLOCK;
-        }
-
-        /*for(int i=0; i<width; i++){
-            for(int j=1; j<height; j++){
-                int prob = rand() % 100;
-                if(prob < 25){
-                    levelMap[i][j] = GLULUCAT_BLOCK;
-                }else if(prob < 35){
-                    levelMap[i][j] = GLULUCAT_YARNBALL;
-                }else{
-                    levelMap[i][j] = GLULUCAT_NOTHING;
-                }
-            }
-        }*/
-
-        /*
-        //RANDOM
-
-        //RANDOM
-        for(int i=5; i<width-5; i++){
-            levelMap[i][3] = GLULUCAT_BLOCK;
-        }
-        */
     }
-}
+    levelMap[2][1] = GLULUCAT_BLOCK;
+    levelMap[13][1] = GLULUCAT_BLOCK;
 
-Level::Level(int pwidth, int pheight){
-    width = pwidth;
-    height = pheight;
-}
+    for(int i=5; i<width-5; i++){
+        levelMap[i][3] = GLULUCAT_BLOCK;
+    }
 
-Level::Level(int pwidth, int pheight, std::vector<Block> pblocks ){
-    width = pwidth;
-    height = pheight;
-    //blocks = pblocks;
-}
-
-void Level::AddBlock(Block block){
-    //blocks.push_back(block);
 }
 
 void Level::UpdateCell(int i, int j, int val){

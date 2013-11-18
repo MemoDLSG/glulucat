@@ -25,44 +25,94 @@
 Glulucat glulucat;
 Level level;
 std::vector<Duck> ducks;
+string currentLevel;
 
 bool pause;
 
 enum current_screen { START, CREDITS, PLAYING } screen;
 
-/*
-* Limpia el fondo
-*/
-void init(void) {
-    glClearColor (0.0, 0.0, 0.0, 0.0);
-    glShadeModel(GL_FLAT);
-
-    pause = false;
-
+void startDefault(){
     for(int i = 0; i < 3; i++) {
-        Duck duck = Duck(200+i*150, GLULUCAT_BLOCK_SIZE*1.5);
+        Duck duck = Duck(150, GLULUCAT_BLOCK_SIZE*(i+1.5));
         duck.name = i;
         ducks.push_back(duck);
     }
-    Duck duck = Duck(350, GLULUCAT_BLOCK_SIZE*5.5);
-    ducks.push_back(duck);
+    level.StartDefault();
+}
+
+void startLevel(string file){
+    ifstream layout (file.c_str());
+    string line;
+    int x, y, i = 0;
+    Duck duck;
+    if (layout.is_open()){
+        getline(layout, line);
+        level.width = atoi(line.c_str());
+
+        getline(layout, line);
+        level.height = atoi(line.c_str());
+
+        for(int j=(level.height-1); j>=0; j--){
+            getline(layout, line);
+            for(int i=0; i<level.width; i++){
+                switch (line.at(i)){
+                    case 'G':
+                        x = (i+0.5)*GLULUCAT_BLOCK_SIZE;
+                        y = (j+0.5)*GLULUCAT_BLOCK_SIZE;
+                        glulucat = Glulucat(x, y, glulucat.lives); //FOREVEEEEEEEERRRRRR!!!!!!!!111!11!1
+                        break;
+                    case 'D':
+                        x = (i+0.5)*GLULUCAT_BLOCK_SIZE;
+                        y = (j+0.5)*GLULUCAT_BLOCK_SIZE;
+                        duck = Duck(x, y);
+                        ducks.push_back(duck);
+                        break;
+                    default:
+                        level.levelMap[i][j] = line.at(i) - '0';
+                        break;
+                }
+            }
+        }
+        layout.close();
+    }
+
+    else{
+        cout << "Unable to open file" << endl;
+        startDefault();
+    }
+}
+
+void init(void) {
+    glClearColor (0.0, 0.0, 0.0, 0.0);
+    glShadeModel(GL_FLAT);
+    currentLevel = "C:\\Users\\Memo\\Documents\\GitHub\\glulucat\\level1.txt";
+    pause = false;
+    startLevel(currentLevel);
 
 }
 
 void timer(int una_vars) {
 
+    if(glulucat.dead){
+        while (!ducks.empty()){
+            ducks.pop_back();
+        }
+        startLevel(currentLevel);
+    }
+
     if(!pause) {
-    	glulucat.moveY(level);
+    	glulucat.moveY(level.levelMap);
     	glulucat.collectYarn(level);
+
     	for(int i=0; i<ducks.size(); i++){
         	Duck thisDuck = ducks.at(i);
-        	thisDuck.moveY(level);
-   	    	thisDuck.moveX(level);
+        	thisDuck.moveY(level.levelMap);
+   	    	thisDuck.moveX(level.levelMap);
    	    	ducks.erase(ducks.begin()+i);
    	    	thisDuck.bumpDucks(ducks);
     	    ducks.insert(ducks.begin()+i, thisDuck);
     	}
-    	//glulucat.bumpDucks(level);
+    	glulucat.bumpDucks(ducks);
 	}
     glutPostRedisplay();
 
@@ -133,12 +183,12 @@ void keyboard (unsigned char key, int x, int y) {
         switch (key) {
 	        case 'A': case 'a':
     	        glulucat.x_speed = -10;
-        	    glulucat.moveX(level);
+        	    glulucat.moveX(level.levelMap);
                 break;
 
        	 	case 'D': case 'd':
         	    glulucat.x_speed = 10;
-            	glulucat.moveX(level);
+            	glulucat.moveX(level.levelMap);
                 break;
 
             case 'W': case 'w':
