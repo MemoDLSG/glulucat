@@ -45,6 +45,7 @@ public:
     void UpdateCell(int, int, int);
     void DrawBlock(int, int);
     void DrawYarn(int, int);
+    void PrintLevel();
     int levelMap[16][12];
 };
 

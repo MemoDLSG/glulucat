@@ -56,16 +56,6 @@ void Glulucat::displayMetadata(void){
 }
 
 void Glulucat::collectYarn(Level& level){
-    /*
-    cout << "En collectYarn, antes del chequeo" << endl;
-    for(int j=(level.height-1); j>=0; j--){
-            for(int i=0; i<level.width; i++){
-                cout << level.levelMap[i][j];
-            }
-            cout << endl;
-        }
-    cout << endl;
-    */
 
     float i = this->x/(GLULUCAT_BLOCK_SIZE*1.0) - 0.5;
     float j = this->y/(GLULUCAT_BLOCK_SIZE*1.0) - 0.5;
@@ -95,18 +85,6 @@ void Glulucat::collectYarn(Level& level){
         level.UpdateCell(right, up, GLULUCAT_NOTHING);
         score += GLULUCAT_YARN_SCORE;
     }
-    /*
-    cout << "En collectYarn, despues del chequeo" << endl;
-    for(int j=(level.height-1); j>=0; j--){
-            for(int i=0; i<level.width; i++){
-                cout << level.levelMap[i][j];
-            }
-            cout << endl;
-        }
-    cout << endl;
-    */
-
-    //return level;
 }
 
 

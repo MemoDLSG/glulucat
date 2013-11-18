@@ -36,78 +36,48 @@ void Duck::displayCharacter(void) {
     glPopMatrix();
 }
 
-void Duck::bumpDucks(vector<Duck> otherDucks) {
+void Duck::bumpDucks(vector<Duck> ducks) {
     bool touchingOnYDown, touchingOnYUp, touchingOnXLeft, touchingOnXRight;
-    int blockUpperEdge, blockLowerEdge, characterUpperEdge, characterLowerEdge;
-    int blockLeftEdge, blockRightEdge, characterLeftEdge, characterRightEdge;
-    int movX, movY;
-    for (std::vector<Duck>::iterator it = otherDucks.begin() ; it != otherDucks.end(); ++it){
-        blockUpperEdge = it->y + GLULUCAT_BLOCK_SIZE/2;
-        blockLowerEdge = it->y - GLULUCAT_BLOCK_SIZE/2;
+    int duckUpperEdge, duckLowerEdge, characterUpperEdge, characterLowerEdge;
+    int duckLeftEdge, duckRightEdge, characterLeftEdge, characterRightEdge;
+
+    for (std::vector<Duck>::iterator it = ducks.begin() ; it != ducks.end(); ++it){
+        duckUpperEdge = it->y + GLULUCAT_BLOCK_SIZE/2;
+        duckLowerEdge = it->y - GLULUCAT_BLOCK_SIZE/2;
         characterUpperEdge = this->y + GLULUCAT_BLOCK_SIZE/2;
         characterLowerEdge = this->y - GLULUCAT_BLOCK_SIZE/2;
 
-        blockLeftEdge = it->x - GLULUCAT_BLOCK_SIZE/2;
-        blockRightEdge = it->x + GLULUCAT_BLOCK_SIZE/2;
+        duckLeftEdge = it->x - GLULUCAT_BLOCK_SIZE/2;
+        duckRightEdge = it->x + GLULUCAT_BLOCK_SIZE/2;
         characterLeftEdge = this -> x - GLULUCAT_BLOCK_SIZE/2;
         characterRightEdge = this -> x + GLULUCAT_BLOCK_SIZE/2;
 
-        touchingOnYDown = (characterLowerEdge <= blockUpperEdge && characterLowerEdge >= blockLowerEdge);
-        touchingOnYUp = (characterUpperEdge >= blockLowerEdge && characterUpperEdge <= blockUpperEdge);
-        touchingOnXLeft = (characterLeftEdge < blockRightEdge && characterLeftEdge >= blockLeftEdge);
-        touchingOnXRight = (characterRightEdge > blockLeftEdge && characterRightEdge <= blockRightEdge);
-
-        /*
-        if((touchingOnXLeft || touchingOnXRight) && (touchingOnYDown || touchingOnYUp)){
-            if(touchingOnXLeft || touchingOnXRight){
-                this -> x_speed *= -1;
-            }
-            if(touchingOnXLeft){
-                movX = 1;
-            }else{ //touchingOnXRight;
-                movX = -1;
-            }
-            if(touchingOnYDown){
-                movY = 1;
-            }else{ //touchingOnYUp;
-                movY = -1;
-            }
-
-            this -> x = it->x + movX*GLULUCAT_BLOCK_SIZE;
-            this -> y = it->y + movY*GLULUCAT_BLOCK_SIZE;
-
-            break;
-        }*/
-
-
-        if(touchingOnYDown || touchingOnYUp){
-            if(touchingOnXLeft){
-                this -> x = it->x + GLULUCAT_BLOCK_SIZE;
-                this -> x_speed *= -1;
-                break;
-            }
-
-            if(touchingOnXRight){
-                this -> x = it->x - GLULUCAT_BLOCK_SIZE;
-                this -> x_speed *= -1;
-                break;
-            }
-        }
-/*
+        touchingOnYDown = (characterLowerEdge <= duckUpperEdge && characterLowerEdge >= duckLowerEdge);
+        touchingOnYUp = (characterUpperEdge >= duckLowerEdge && characterUpperEdge <= duckUpperEdge);
+        touchingOnXLeft = (characterLeftEdge < duckRightEdge && characterLeftEdge >= duckLeftEdge);
+        touchingOnXRight = (characterRightEdge > duckLeftEdge && characterRightEdge <= duckRightEdge);
 
         if(touchingOnXLeft || touchingOnXRight){
+            if(characterUpperEdge == duckUpperEdge){
+                this -> x_speed *= -1;
+                if(touchingOnXLeft){
+                    this -> x = it->x + GLULUCAT_BLOCK_SIZE;
+                }else{ //touchingOnXRight;
+                    this -> x = it->x - GLULUCAT_BLOCK_SIZE;
+                }
+                break;
+            }
+
             if(touchingOnYDown){
                 this -> y = it->y + GLULUCAT_BLOCK_SIZE;
-                //this -> x_speed *= -1;
-                //break;
+                break;
             }
 
             if(touchingOnYUp){
                 this -> y = it->y - GLULUCAT_BLOCK_SIZE;
-                //this -> x_speed *= -1;
-                //break;
+                break;
             }
-        }*/
+        }
     }
 }
 

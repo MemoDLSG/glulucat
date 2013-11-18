@@ -89,6 +89,16 @@ void Level::UpdateCell(int i, int j, int val){
     levelMap[i][j] = val;
 }
 
+void Level::PrintLevel(){
+    for(int j=(height-1); j>=0; j--){
+        for(int i=0; i<width; i++){
+            cout << levelMap[i][j];
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+
 void Level::DrawLevel(){
     /*for (std::vector<Block>::iterator it = blocks.begin() ; it != blocks.end(); ++it){
         (*it).DrawBlock();

@@ -54,16 +54,6 @@ void timer(int una_vars) {
     if(!pause) {
     	glulucat.moveY(level);
     	glulucat.collectYarn(level);
-    	/*
-        cout << "Fuera de collectYarn, despues del chequeo" << endl;
-        for(int j=(level.height-1); j>=0; j--){
-                for(int i=0; i<level.width; i++){
-                    cout << level.levelMap[i][j];
-                }
-                cout << endl;
-            }
-        cout << endl;
-        */
     	for(int i=0; i<ducks.size(); i++){
         	Duck thisDuck = ducks.at(i);
         	thisDuck.moveY(level);
@@ -72,6 +62,7 @@ void timer(int una_vars) {
    	    	thisDuck.bumpDucks(ducks);
     	    ducks.insert(ducks.begin()+i, thisDuck);
     	}
+    	//glulucat.bumpDucks(level);
 	}
     glutPostRedisplay();
 
