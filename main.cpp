@@ -144,7 +144,6 @@ void timer(int una_vars) {
     if(glulucat.dead){
         while (!ducks.empty()){
             ducks.pop_back();
-            
         }
         playSound();
         startLevel(currentLevel);
@@ -164,6 +163,9 @@ void timer(int una_vars) {
    	    	ducks.erase(ducks.begin()+i);
    	    	thisDuck.bumpDucks(ducks);
     	    ducks.insert(ducks.begin()+i, thisDuck);
+            if(thisDuck.dead){
+                ducks.erase(ducks.begin()+i);
+            }
     	}
 
     	if(glulucat.flicking > 0){
@@ -232,7 +234,7 @@ void display(void) {
             break;
 
         case WINNERISYOU:
-            screen.DrawWinnerIsYOU();
+            screen.DrawWinnerIsYOU(glulucat.score);
             break;
 
         case PLAYING:
@@ -278,20 +280,18 @@ void processMenu(int option){
             break;
         case 100:
             state = START;
-            game_pause = false;
             break;
         case 101:
             state = CREDITS;
-            game_pause = false;
             break;
         case 102:
             state = SCORES;
-            game_pause = false;
             break;
         case 103:
             state = GAMEOVER;
-            game_pause = false;
             break;
+        case 104:
+            state = WINNERISYOU;
         default:
             break;
     }

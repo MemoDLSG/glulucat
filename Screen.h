@@ -33,6 +33,7 @@ public :
     void DrawScores(std::vector<std::string>);
     void DrawCredits(void);
     void DrawGameOver(void);
+    void DrawWinnerIsYOU(int);
     
 };
 

@@ -30,13 +30,11 @@ using namespace std;
 
 class Character {
 
-    bool powerup;
-    bool flicking;
-
 public:
     int x_speed;
     int y_speed;
     bool on_air;
+    bool dead;
 
     Character();
     //~Character();

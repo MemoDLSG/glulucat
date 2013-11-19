@@ -17,8 +17,7 @@ Character::Character(){
     x_speed = 10;
     y_speed = 0;
     on_air = true;
-    powerup = false;
-    flicking = false;
+    dead = false;
 }
 
 //Funciones a implementar en Glulucat y Duck independientemente!
@@ -82,6 +81,8 @@ int Character::moveY(int levelMap[][12]) {
     if(on_air && y_speed > -GLULUCAT_BLOCK_SIZE/2){
         y_speed -= 2;
     }
+    
+    if(this -> y < -GLULUCAT_BLOCK_SIZE) this->dead = true;
 
     return this->y;
 }

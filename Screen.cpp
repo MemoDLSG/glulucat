@@ -209,5 +209,43 @@ void Screen::DrawCredits() {
     print_bitmap_stringg(GLUT_BITMAP_TIMES_ROMAN_24, str);
 }
 
+void Screen::DrawWinnerIsYOU(int score) {
+    glLoadIdentity();
+    glPushMatrix();
+    glColor4f(0.2, 0.2, 0.9, .4);
+    glTranslatef(400, 300, 0);
+    glScalef(10,  5, 1);
+    glutSolidSphere(40, 40, 50);
+    glPopMatrix();
+    
+    
+    const char* str;
+    
+    str = " S A L I R   D E L   J U E G O [S]";
+    
+    glColor3f(.9, .9, .2);
+    glRasterPos3i(232, 202, 0);
+    print_bitmap_stringg(GLUT_BITMAP_TIMES_ROMAN_24, str);
+    glColor3f(.9, .9, .2);
+    glRasterPos3i(231, 201, 0);
+    print_bitmap_stringg(GLUT_BITMAP_TIMES_ROMAN_24, str);
+    glColor3f(.6, .6, .1);
+    glRasterPos3i(230, 200, 0);
+    print_bitmap_stringg(GLUT_BITMAP_TIMES_ROMAN_24, str);
+    
+    str = " R E G R E S A R     M E N U    P R I N C I P A L [M]";
+    
+    glColor3f(0.5, 0.8, 0.8);
+    glRasterPos3i(152, 302, 0);
+    print_bitmap_stringg(GLUT_BITMAP_TIMES_ROMAN_24, str);
+    glColor3f(0.5, 0.8, 0.8);
+    glRasterPos3i(151, 301, 0);
+    print_bitmap_stringg(GLUT_BITMAP_TIMES_ROMAN_24, str);
+    glColor3f( 1.0, 1.0, 0.7);
+    glRasterPos3i(150, 300, 0);
+    print_bitmap_stringg(GLUT_BITMAP_TIMES_ROMAN_24, str);
+    
+}
+
 Screen::~Screen(void) {
 }
